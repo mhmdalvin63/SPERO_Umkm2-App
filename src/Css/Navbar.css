@@ -1,0 +1,59 @@
+.Navbar{
+    background: transparent!important;
+    padding: 0!important;
+    width: 100vw;
+}
+.nav-logo{
+    position: relative;
+}
+/* .na-logo img:nth-child(1){
+    width: 30%;
+    height: auto;
+} */
+.na-logo{
+    display: flex;
+    justify-content: center;
+}
+.na-logo img{
+    transform: translateY(.75rem);
+    width: 75%;
+    height: auto;
+}
+.Navbg{
+    position: relative;
+    transform: translate(0, -3rem);
+}
+.nav-absolute{
+    transform: translateY(-3rem);
+    width: 87vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 5%;
+    top: 25%;
+}
+.na-menu a{
+    text-decoration: none;
+    color: #4F7B90;
+}
+
+@media only screen and (max-width: 992px) {
+    .nav-absolute{
+        width: 95vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        position: absolute;
+        left: 0%;
+        top: 20%;
+    }
+    .Navbg{
+        position: relative;
+        height: 80%;
+        transform: translate(-10rem, -3rem);
+    }
+    .na-menu{
+        margin-top: 2rem;
+    }
+}
