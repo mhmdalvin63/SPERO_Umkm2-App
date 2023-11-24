@@ -1,0 +1,177 @@
+  .parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sub-parent{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 10px;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+    "satu satu dua dua dua dua"
+    "tiga tiga empat empat lima lima";
+    width: 90vw;
+    margin-top: 8%;
+}
+#total-umkm{
+    grid-area: satu;
+}
+.svg-maps{
+    grid-area: dua;
+}
+#skala-usaha{
+    grid-area: tiga;
+}
+#adopsi-teknologi{
+    grid-area: empat;
+}
+#level-umkm{
+    grid-area: lima;
+}
+
+.hr {
+    border-top: 2px solid #C0C0C0;
+    margin: 0;
+  }
+
+  .vr {
+    margin-top: 1%;
+    display: inline-block;
+    margin-left: 1%;
+    align-self: center;
+    width: var(--bs-border-width);
+    height: 2.5em !important;
+    background-color: currentcolor;
+    opacity: .25;
+}
+
+  .totalBorder {
+    border: .2px solid #e1e1e6  ;
+    position: relative;
+    padding: 5px;
+    width: 100%;
+  }
+  .top-border,
+  .bottom-border {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 1rem;
+    height: 1rem;
+    left: -3px;
+  }
+  .top-border {
+    width: calc(100% + 4px);
+    top: -2px;
+  }
+  .bottom-border {
+    bottom: -2px;
+    width: calc(100% + 4px);
+  }
+  .top-border:after,
+  .top-border:before,
+  .bottom-border:after,
+  .bottom-border:before {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+  }
+  .top-border:after,
+  .top-border:before {
+    border-top: 2px solid #0A354A;
+  }
+  .bottom-border:after,
+  .bottom-border:before {
+    border-bottom: 2px solid #0A354A;
+  }
+  .top-border:before,
+  .bottom-border:before {
+    border-left: 2px solid #0A354A;
+  }
+  .top-border:after,
+  .bottom-border:after {
+    border-right: 2px solid #0A354A;
+  }
+  
+/* ----- CONTENT SKALA USAHA ----- */
+.content-su-top{
+    position: relative;
+    height: 50vh;
+}
+.content-for-absolute{
+    height: 100%;
+    text-align: center;
+    position: relative;
+}
+.Topleft{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Topright{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.Bottomleft{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.Bottomright{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.hr-skala-usaha{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.content-su-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vr-skala-usaha{
+    margin: 0 1rem;
+    display: inline-block;
+    align-self: center;
+    width: var(--bs-border-width);
+    height: 2.5em !important;
+    background-color: currentcolor;
+    opacity: .25;
+}
+.su-list{
+    text-align: center;
+}
+
+
+
+/* ----- ADOPSI TEKNOLOGI ----- */
+.at-header{
+    display: flex;
+    align-items: center;
+}
+.list-at{
+    margin-left: auto;
+    width: 94%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ----- LEVEL UMKM ----- */
+.lu-header{
+    display: flex;
+    align-items: center;
+}
+.list-lu{
+    margin-left: auto;
+    width: 94%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

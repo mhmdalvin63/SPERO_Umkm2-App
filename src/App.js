@@ -6,6 +6,7 @@ import Main from './Pages/Main';
 import Umkm from './Pages/Umkm';
 import Teknologi from './Pages/Teknologi';
 
+
 function App() {
   return (
     <div className='body'>
