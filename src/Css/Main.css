@@ -1,38 +1,21 @@
-  .parent{
+.parent{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .sub-parent{
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    gap: 10px;
-    grid-template-rows: auto auto;
-    grid-template-areas: 
-    "satu satu dua dua dua dua"
-    "tiga tiga empat empat lima lima";
     width: 90vw;
     margin-top: 8%;
 }
-#total-umkm{
-    grid-area: satu;
-}
-.svg-maps{
-    grid-area: dua;
-}
-#skala-usaha{
-    grid-area: tiga;
-}
-#adopsi-teknologi{
-    grid-area: empat;
-}
-#level-umkm{
-    grid-area: lima;
-}
 
 .hr {
-    border-top: 2px solid #C0C0C0;
-    margin: 0;
+    border-top: 2px solid #acaaaa;
+    margin: 5px 0;
+  }
+
+.hr-new {
+    border-top: 2px solid #acaaaa;
+    margin: 10px 0;
   }
 
   .vr {
@@ -59,7 +42,7 @@
     justify-content: space-between;
     width: 1rem;
     height: 1rem;
-    left: -3px;
+    left: -1px;
   }
   .top-border {
     width: calc(100% + 4px);
@@ -94,10 +77,24 @@
     border-right: 2px solid #0A354A;
   }
   
+/* ----- CONTENT TOTAL UMKM -----*/
+.content-man{
+  align-items: center;
+  line-height: 1;
+}
+.content-woman{
+  align-items: center;
+  line-height: 1;
+}
+.content-man-icon h1{
+  display: flex;
+  align-items: center;
+}
+
 /* ----- CONTENT SKALA USAHA ----- */
 .content-su-top{
     position: relative;
-    height: 50vh;
+    height: 100%;
 }
 .content-for-absolute{
     height: 100%;
@@ -124,6 +121,23 @@
     bottom: 0;
     right: 0;
 }
+.img-chart-text {
+  position: absolute;
+  color: white;
+  width: 100%;
+}
+.ict-1{
+  top: 11.25%;
+}
+.ict-2{
+  top: 27.5%;
+}
+.ict-3{
+  top: 47.5%;
+}
+.ict-4{
+  top: 70.5%;
+}
 .hr-skala-usaha{
     width: 75%;
     margin-left: auto;
@@ -145,6 +159,7 @@
 }
 .su-list{
     text-align: center;
+    line-height: 1;
 }
 
 
@@ -164,6 +179,11 @@
 
 
 /* ----- LEVEL UMKM ----- */
+.flex-at{
+  position: absolute;
+  bottom: 0;
+  width: 100%; 
+}
 .lu-header{
     display: flex;
     align-items: center;

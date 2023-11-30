@@ -99,7 +99,7 @@ const IndonesiaMap = (props) => {
       <Loading/>
    ) : (
     <div>
-      <svg width="100%" height="100%">
+      <svg width="100%" height="17rem">
       <image href={Maps} className='svg-main' width="100%" height="100%" />
       {mappedPoints.map((item, index) => {
         const cx = (item.middle_long - minX) / (maxX - minX) * 1800;
