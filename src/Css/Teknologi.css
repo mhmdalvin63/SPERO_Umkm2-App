@@ -50,8 +50,10 @@
 }
 
 .list-sosmed{
-    display: flex;
     align-items: center;
+}
+.total-chart .cc{
+    transform: translateY(-.5rem);
 }
 .dropdown-sosmed{
     display: flex !important;

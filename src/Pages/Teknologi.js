@@ -7,9 +7,13 @@ import '../Css/Teknologi.css'
 
 import IconSosmed from '../Images/IconSosmed.png';
 import Instagram from '../Images/instagram.png';
+import Tokopedia from '../Images/Tokopedia.png';
 import Facebook from '../Images/Facebook.png';
 import Twitter from '../Images/Twitter.png';
 import Tiktok from '../Images/Tiktok.png';
+import Shopee from '../Images/Shopee.png';
+import Lazada from '../Images/Lazada.png';
+import Zalora from '../Images/Zalora.png';
 
 const Teknologi = () => {
     return (
@@ -22,12 +26,12 @@ const Teknologi = () => {
             <div className="sosial-media my-3">
                 <Row>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
                             <img className='Instagram' src={Instagram} alt="Instagram" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
                                 <h4 className='cc'>Instagram</h4>
                             </div>
                         </div>
@@ -44,12 +48,12 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
                             <img className='Tiktok' src={Tiktok} alt="Tiktok" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
                                 <h4 className='cc'>Tiktok</h4>
                             </div>
                         </div>
@@ -66,12 +70,12 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
                             <img className='Facebook' src={Facebook} alt="Facebook" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
                                 <h4 className='cc'>Facebook</h4>
                             </div>
                         </div>
@@ -88,12 +92,12 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
                             <img className='Twitter' src={Twitter} alt="Twitter" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
                                 <h4 className='cc'>Twitter</h4>
                             </div>
                         </div>
@@ -144,13 +148,13 @@ const Teknologi = () => {
             <div className="sosial-media my-3">
                 <Row>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
-                            <img className='Instagram' src={Instagram} alt="Instagram" />
+                            <img className='Tokopedia' src={Tokopedia} alt="Tokopedia" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
-                                <h4 className='cc'>Instagram</h4>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
+                                <h4 className='cc'>Tokopedia</h4>
                             </div>
                         </div>
                         <Dropdown>
@@ -166,13 +170,13 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
-                            <img className='Tiktok' src={Tiktok} alt="Tiktok" />
+                            <img className='Shopee' src={Shopee} alt="Shopee" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
-                                <h4 className='cc'>Tiktok</h4>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
+                                <h4 className='cc'>Shopee</h4>
                             </div>
                         </div>
                         <Dropdown>
@@ -188,13 +192,13 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
-                            <img className='Facebook' src={Facebook} alt="Facebook" />
+                            <img className='Lazada' src={Lazada} alt="Lazada" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
-                                <h4 className='cc'>Facebook</h4>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
+                                <h4 className='cc'>Lazada</h4>
                             </div>
                         </div>
                         <Dropdown>
@@ -210,13 +214,13 @@ const Teknologi = () => {
     </Dropdown>
                     </Col>
                     <Col sm={3}>
-                        <div className='list-sosmed gap-3'>
+                        <div className='list-sosmed  d-lg-flex d-block text-lg-start text-center gap-3'>
                             <div className='img-chart'>
-                            <img className='Twitter' src={Twitter} alt="Twitter" />
+                            <img className='Zalora' src={Zalora} alt="Zalora" />
                             </div>
-                            <div className='total-chart'>
-                                <h1>5456</h1>
-                                <h4 className='cc'>Twitter</h4>
+                            <div className='total-chart  mt-lg-0 mt-2'>
+                                <h3>5456</h3>
+                                <h4 className='cc'>Zalora</h4>
                             </div>
                         </div>
                         <Dropdown>
