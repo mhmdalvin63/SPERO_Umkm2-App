@@ -5,7 +5,30 @@
 }
 .sub-parent{
     width: 90vw;
+    height: 88vh;
     margin-top: 8%;
+}
+.content-left{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.content-right{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+#total-umkm{
+  height: max-content !important;
+}
+#skala-usaha{
+  flex: 1;
+}
+.svg-maps{
+  height: max-content !important;
+}
+.flex-at{
+  flex: 1;
 }
 
 .hr {
@@ -102,21 +125,25 @@
     position: relative;
 }
 .Topleft{
+  width: 2vw;
     position: absolute;
     top: 0;
     left: 0;
 }
 .Topright{
+  width: 2vw;
     position: absolute;
     top: 0;
     right: 0;
 }
 .Bottomleft{
+  width: 2vw;
     position: absolute;
     bottom: 0;
     left: 0;
 }
 .Bottomright{
+  width: 2vw;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -126,14 +153,20 @@
   color: white;
   width: 100%;
 }
+.MainChart{
+  width: 100%;
+  height: 100%;
+  max-width: 550px;
+  max-height: 550px;
+}
 .ict-1{
-  top: 11.25%;
+  top: 5.25%;
 }
 .ict-2{
-  top: 27.5%;
+  top: 23%;
 }
 .ict-3{
-  top: 47.5%;
+  top: 44%;
 }
 .ict-4{
   top: 70.5%;
@@ -180,9 +213,8 @@
 
 /* ----- LEVEL UMKM ----- */
 .flex-at{
-  position: absolute;
-  bottom: 0;
   width: 100%; 
+  height: max-content;
 }
 .lu-header{
     display: flex;

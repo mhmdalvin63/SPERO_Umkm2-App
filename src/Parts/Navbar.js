@@ -15,9 +15,9 @@ function Navigasi() {
                 <img className='Umkm' src={Umkm} alt="Umkm" />
               </div>
               <div className='na-menu d-flex gap-4'>
-                <Link className='' to={'/main'}>MAIN</Link>
-                <Link className='' to={'/umkm'}>UMKM</Link>
-                <Link className='' to={'/teknologi'}>TEKNOLOGI</Link>
+                <Link className='' to={'/main'}><p className='navbar'>MAIN</p></Link>
+                <Link className='' to={'/umkm'}><p className='navbar'>UMKM</p></Link>
+                <Link className='' to={'/teknologi'}><p className='navbar'>TEKNOLOGI</p></Link>
               </div>
             </div>
         </Navbar.Brand>

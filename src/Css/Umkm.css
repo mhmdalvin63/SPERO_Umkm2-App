@@ -1,0 +1,28 @@
+.circle-graph img{
+    width: 100%;
+}
+.circle-graph-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.lu-content-umkm{
+    display: flex;
+    justify-content: space-around;
+}
+.content-level-umkm{
+    height: 100%;
+}
+.lc-content{
+    height: 100%;
+}
+
+.vr-umkm {
+    display: inline-block;
+    align-self: stretch;
+    width: var(--bs-border-width);
+    min-height: 1em;
+    background-color: currentcolor;
+    opacity: .25;
+}

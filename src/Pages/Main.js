@@ -16,8 +16,33 @@ import Topleft from '../Images/top-left.png'
 import Topright from '../Images/top-right.png'
 import Bottomleft from '../Images/bottom-left.png'
 import Bottomright from '../Images/bottom-right.png'
+import { useEffect, useState } from 'react';
+import { Axios } from 'axios';
 
-const Main = () => {
+function Main () {
+
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [selectedRegion, setSelectedRegion] = useState(''); // Ganti dengan state yang sesuai
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://admin.umkmlevelup.id/api/skalausaha');
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            setData(result);
+          } catch (error) {
+            setError(error);
+          }
+        };
+    
+        fetchData();
+      }, []); // Empty dependency array to run the effect only once on mount
+    
+
     return (
       <div className="parent">
         <div className='sub-parent'>
@@ -26,29 +51,37 @@ const Main = () => {
                 <div className='my-3 totalBorder p-3' id='total-umkm'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
-                    <div className='content d-flex justify-content-center align-items-center gap-2 px-3'>
-                        <h2 className='fw-bold cb'>2.340</h2>
-                        <h5 className='cyan1 mb-1'>Total UMKM</h5>
-                    </div>
-                    <hr className='hr' />
-                    <div className='bottom-content d-flex gap-2 align-items-center justify-content-center'>
-                        <div className='content-man d-flex gap-2 align-items-center'>
-                            <div className='content-man-icon'>
-                                <h1 className='cb'><Icon icon="ant-design:man-outlined" /></h1>
+                    <div className='d-flex justify-content-center align-items-center w-100 h-100'>
+                        <div className='w-100'>
+                            <div className='content d-block text-center d-xl-flex justify-content-center align-items-center gap-2 px-3'>
+                                <h2 className='fw-bold cb'>1,746</h2>
+                                <h4 className='cyan1 fw-400'>Total UMKM</h4>
                             </div>
-                            <div className='content-man-value'>
-                                <h4 className='mb-0 cb'>1170</h4>
-                                <p className='mb-0'>Laki-Laki</p>
-                            </div>
-                        </div>
-                        <vr className='vr' />
-                        <div className='content-woman d-flex gap-2 align-items-center'>
-                            <div className='content-man-icon'>
-                                <h1 className=' cc'><Icon icon="ant-design:woman-outlined" /></h1>
-                            </div>
-                            <div className='content-man-value'>
-                                <h4 className='mb-0 cc'>1170</h4>
-                                <p className='mb-0'>Perempuan</p>
+                            <hr className='hr' />
+                            <div className='bottom-content d-flex gap-2 align-items-center justify-content-center'>
+                                <div className='content-man w-100 d-block d-xl-flex gap-2 align-items-center'>
+                                    <div className='content-man-icon d-flex gap-2 align-items-center justify-content-center'>
+                                        <h1 className='cb'><Icon icon="ant-design:man-outlined" /></h1>
+                                        <h4 className='mb-0 cb d-block d-xl-none'>621</h4>
+                                    </div>
+                                        <p className='mb-0 d-block d-xl-none text-center'>Laki-Laki</p>
+                                    <div className='content-man-value d-none d-xl-block'>
+                                        <h4 className='mb-0 cb'>621</h4>
+                                        <p className='mb-0'>Laki-Laki</p>
+                                    </div>
+                                </div>
+                                <vr className='vr' />
+                                <div className='content-man w-100 d-block d-xl-flex gap-2 align-items-center'>
+                                    <div className='content-man-icon d-flex gap-2 align-items-center justify-content-center'>
+                                        <h1 className='cc'><Icon icon="ant-design:woman-outlined" /></h1>
+                                        <h4 className='mb-0 cb d-block d-xl-none'>1125</h4>
+                                    </div>
+                                        <p className='mb-0 d-block d-xl-none text-center'>Perempuan</p>
+                                    <div className='content-man-value d-none d-xl-block'>
+                                        <h4 className='mb-0 cb'>1125</h4>
+                                        <p className='mb-0'>Perempuan</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,39 +93,39 @@ const Main = () => {
                     <div className='content-skala-usaha'>
                         <div className='content-su-top'>
                             <div className='content-for-absolute'>
-                                <p>Skala Usaha</p>
+                                <h4 className='mb-3'>Skala Usaha</h4>
                                 <img className='Topleft' src={Topleft} alt="Topleft" />
                                 <img className='Topright' src={Topright} alt="Topright" />
                                 <img className='Bottomleft' src={Bottomleft} alt="Bottomleft" />
                                 <img className='Bottomright' src={Bottomright} alt="Bottomright" />
-                                <div className='img-chart position relative'>
+                                <div className='img-chart position-relative'>
                                     <img className='MainChart position relative mt-2' src={MainChart} alt="MainChart" />
-                                    <p className='img-chart-text ict-1 fw-bold'>2256</p>
-                                    <p className='img-chart-text ict-2 fw-bold'>2256</p>
-                                    <p className='img-chart-text ict-3 fw-bold'>2256</p>
-                                    <p className='img-chart-text ict-4 fw-bold'>2256</p>
+                                    <p className='img-chart-text ict ict-1 fw-bold'>112</p>
+                                    <p className='img-chart-text ict ict-2 fw-bold'>34</p>
+                                    <p className='img-chart-text ict ict-3 fw-bold'>21</p>
+                                    <p className='img-chart-text ict ict-4 fw-bold'>8</p>
                                 </div>
                             </div>
                         </div>
                         <hr className='hr-skala-usaha' />
                         <div className='content-su-bottom'>
                             <div className='su-list'>
-                                <p className='fw-bold cb'>788</p>
+                                <p className='fw-bold cb'>112</p>
                                 <p>Ultra Micro</p>
                             </div>
                             <vr className="vr-skala-usaha" />
                             <div className='su-list'>
-                                <p className='fw-bold cc'>788</p>
+                                <p className='fw-bold cc'>34</p>
                                 <p>Micro</p>
                             </div>
                             <vr className="vr-skala-usaha" />
                             <div className='su-list'>
-                                <p className='fw-bold cr'>788</p>
+                                <p className='fw-bold cr'>21</p>
                                 <p>Menengah</p>
                             </div>
                             <vr className="vr-skala-usaha" />
                             <div className='su-list'>
-                                <p className='fw-bold cj'>788</p>
+                                <p className='fw-bold cj'>8</p>
                                 <p>Besar</p>
                             </div>
                         </div>
@@ -102,7 +135,7 @@ const Main = () => {
 
             <Col sm={8} className='content-right position-relative'>
                 <div className="my-3 svg-maps position-relative">
-                    <SvgMaps/>
+                    <SvgMaps regionColor={selectedRegion} />
                 </div>
 
                 <div className='flex-at d-flex gap-2'>
@@ -118,27 +151,27 @@ const Main = () => {
                         <div className='at-content'>
                             <div className='list-at my-2'>
                                 <p className='cb'>SOSIAL MEDIA</p>
-                                <p className='fw-bold cc'>4.864</p>
+                                <p className='fw-bold cc'>823</p>
                             </div>
                             <div className='list-at my-2'>
                                 <p className='cb'>MARKETPLACE</p>
-                                <p className='fw-bold cc'>5.265</p>
+                                <p className='fw-bold cc'>254</p>
                             </div>
                             <div className='list-at my-2'>
                                 <p className='cb'>POST SYSTEM</p>
-                                <p className='fw-bold cc'>1.256</p>
+                                <p className='fw-bold cc'>121</p>
                             </div>
                             <div className='list-at my-2'>
                                 <p className='cb'>WHATSAPP</p>
-                                <p className='fw-bold cc'>1.256</p>
+                                <p className='fw-bold cc'>224</p>
                             </div>
                             <div className='list-at my-2'>
                                 <p className='cb'>WEBSITE</p>
-                                <p className='fw-bold cc'>1.256</p>
+                                <p className='fw-bold cc'>532</p>
                             </div>
                             <div className='list-at my-2'>
                                 <p className='cb'>OMNI CHANNEL</p>
-                                <p className='fw-bold cc'>1.256</p>
+                                <p className='fw-bold cc'>724</p>
                             </div>
                         </div>
                     </div>
@@ -156,7 +189,7 @@ const Main = () => {
                         <div className='lu-content'>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">2.235</p>
+                                    <p className="fw-bold cc">154</p>
                                     <p className="cb">NOVICE</p>
                                 </div>
                                 <div className='llu-right'>
@@ -165,7 +198,7 @@ const Main = () => {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">2.235</p>
+                                    <p className="fw-bold cc">98</p>
                                     <p className="cb">BEGINNER</p>
                                 </div>
                                 <div className='llu-right'>
@@ -174,7 +207,7 @@ const Main = () => {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">2.235</p>
+                                    <p className="fw-bold cc">63</p>
                                     <p className="cb">OBSERVER</p>
                                 </div>
                                 <div className='llu-right'>
@@ -183,7 +216,7 @@ const Main = () => {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">2.235</p>
+                                    <p className="fw-bold cc">27</p>
                                     <p className="cb">ADOPTER</p>
                                 </div>
                                 <div className='llu-right'>

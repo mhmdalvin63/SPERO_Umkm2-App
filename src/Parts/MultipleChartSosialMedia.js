@@ -69,7 +69,7 @@ const MultipleBarChart = () => {
         options={chartData.options}
         series={chartData.series}
         type="bar"
-        height={150}
+        height={200}
       />
     </div>
   );

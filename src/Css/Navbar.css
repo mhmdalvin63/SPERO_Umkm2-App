@@ -20,11 +20,12 @@
     height: auto;
 }
 .Navbg{
+    width: 100vw;
     position: relative;
-    transform: translate(0, -3rem);
+    transform: translate(0, -30%);
 }
 .nav-absolute{
-    transform: translateY(-3rem);
+    transform: translateY(-40%);
     width: 87vw;
     display: flex;
     justify-content: space-between;
@@ -38,6 +39,11 @@
     color: #4F7B90;
 }
 
+@media only screen and (max-width: 1850px) {
+    .nav-absolute{
+        transform: translateY(-50%);
+    }
+}
 @media only screen and (max-width: 992px) {
     .nav-absolute{
         width: 95vw;
@@ -46,12 +52,12 @@
         align-items: start;
         position: absolute;
         left: 0%;
-        top: 20%;
+        top: 30%;
     }
     .Navbg{
         position: relative;
         height: 80%;
-        transform: translate(-10rem, -3rem);
+        transform: translate(-0%, -15%);
     }
     .na-menu{
         margin-top: 2rem;
