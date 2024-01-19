@@ -26,3 +26,17 @@
     background-color: currentcolor;
     opacity: .25;
 }
+
+.cobain{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    display: block;
+    margin: auto;
+    transform: translate(0, 0);
+}
+.cobadah{
+    /* transform: translate(50%, 50%);
+    transform-origin: center center; */
+    transform: translate(0, 0);
+}

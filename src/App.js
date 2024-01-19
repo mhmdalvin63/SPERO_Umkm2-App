@@ -5,6 +5,7 @@ import Navbar from './Parts/Navbar';
 import Login from './Pages/Login';
 import Main from './Pages/Main';
 import Umkm from './Pages/Umkm';
+import Profile from './Pages/Profile';
 import Teknologi from './Pages/Teknologi';
 
 
@@ -27,6 +28,10 @@ function App() {
         <Route
           path='/teknologi'
           element={<TeknologiWithNavbar />}
+        />
+        <Route
+          path='/profile'
+          element={<ProfileWithNavbar />}
         />
       </Routes>
     </div>
@@ -69,6 +74,16 @@ const TeknologiWithNavbar = () => {
     <>
       <Navbar />
       <Teknologi />
+    </>
+  );
+};
+
+const ProfileWithNavbar = () => {
+  // Return the Profile component with Navbar
+  return (
+    <>
+      <Navbar />
+      <Profile />
     </>
   );
 };

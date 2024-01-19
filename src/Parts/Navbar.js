@@ -3,6 +3,11 @@ import '../Css/Navbar.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Umkm from '../Images/logo-umkm.png';
 import Navbg from '../Images/bg-navbar.png';
+
+import { Icon } from '@iconify/react';
+
+import Logout from '.././Parts/Logout'
+
 import { Link } from 'react-router-dom';
 
 function Navigasi() {
@@ -18,6 +23,7 @@ function Navigasi() {
                 <Link className='' to={'/main'}><p className='navbar'>MAIN</p></Link>
                 <Link className='' to={'/umkm'}><p className='navbar'>UMKM</p></Link>
                 <Link className='' to={'/teknologi'}><p className='navbar'>TEKNOLOGI</p></Link>
+                <Link className='' to={'/profile'}><h5 className='navbar'><Icon icon="iconoir:profile-circle" /></h5></Link>
               </div>
             </div>
         </Navbar.Brand>

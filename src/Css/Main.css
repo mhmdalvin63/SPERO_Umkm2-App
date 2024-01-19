@@ -21,9 +21,7 @@
 #total-umkm{
   height: max-content !important;
 }
-#skala-usaha{
-  flex: 1;
-}
+
 .svg-maps{
   height: max-content !important;
 }
@@ -177,9 +175,7 @@
     margin-right: auto;
 }
 .content-su-bottom{
-    display: flex;
     align-items: center;
-    justify-content: center;
 }
 .vr-skala-usaha{
     margin: 0 1rem;
@@ -191,15 +187,18 @@
     opacity: .25;
 }
 .su-list{
-    text-align: center;
     line-height: 1;
+}
+
+.Statistic{
+  width: 10vw;
+  max-width: 10rem;
 }
 
 
 
 /* ----- ADOPSI TEKNOLOGI ----- */
 .at-header{
-    display: flex;
     align-items: center;
 }
 .list-at{
@@ -217,7 +216,6 @@
   height: max-content;
 }
 .lu-header{
-    display: flex;
     align-items: center;
 }
 .list-lu{
@@ -226,4 +224,66 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+
+
+
+
+
+.popup-maps{
+  width: 110%;
+  background-color: white;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 5px;
+}
+.nama_provinsi{
+  text-transform: capitalize !important;
+}
+.gender-total{
+  width: 100%;
+  position: relative;
+  border: 2px solid #000;
+  border-left: none !important;
+  border-right: none !important;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gender-total:before{
+  content: ''; /* Menambahkan elemen pseudo-content */
+  display: block;
+  position: absolute;
+  top: 0; /* Menempatkan elemen di tengah vertikal */
+  left: 44%;
+  width: 50%;
+  height: 100%;
+  border-left: 2px solid #000; /* Warna dan ketebalan border bagian atas */
+  box-sizing: border-box;
+}
+.gt-laki{
+  width: max-content;
+  line-height: 1;
+}
+
+
+
+.button-close-maps{
+  border: none;
+  background: none;
+  position: absolute;
+  right: -30px;
+  top: -10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .content-left {
+    height: max-content;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #skala-usaha{
+    flex: 1;
+  }
 }

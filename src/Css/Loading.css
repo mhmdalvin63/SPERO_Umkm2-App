@@ -1,5 +1,6 @@
 /* src/components/Loading.css */
 .loading {
+  /* height: 90vh !important; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,8 +11,8 @@
     border: 25px solid rgba(255, 255, 255, 0.3);
     border-top: 4px solid #3498db;
     border-radius: 50%;
-    width: 250px;
-    height: 250px;
+    width: 100px;
+    height: 100px;
     animation: spin 1s linear infinite;
   }
   

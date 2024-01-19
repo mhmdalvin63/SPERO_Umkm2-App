@@ -13,22 +13,22 @@ const MultipleBarChart = () => {
   const [loading, setLoading] = useState(true);
 
   const [SosialMedia, setSosialMedia] = useState([]);
-  const [Instagram, setInstagram] = useState([]);
-  const [Tiktok, setTiktok] = useState([]);
-  const [Facebook, setFacebook] = useState([]);
-  const [Twitter, setTwitter] = useState([]);
+  const [tokopedia, settokopedia] = useState([]);
+  const [shopee, setshopee] = useState([]);
+  const [lazada, setlazada] = useState([]);
+  const [bukalapak, setbukalapak] = useState([]);
 
     useEffect(() => {
       const token = sessionStorage.getItem("jwttoken");
 
-        axios.get(`${urlApi}sosialmedia`, { headers: {"Authorization" : `Bearer ${token}`} })
+        axios.get(`${urlApi}marketplace`, { headers: {"Authorization" : `Bearer ${token}`} })
         .then(response => {
-          console.log('SOSIAL MEDIA',response.data);
+          console.log('MARKETPLACE',response.data);
           setSosialMedia(response.data);
-          setInstagram(response.data.instagram_per_daerah);
-          setTiktok(response.data.tiktok_per_daerah);
-          setFacebook(response.data.facebook_per_daerah);
-          setTwitter(response.data.twitter_per_daerah);
+          settokopedia(response.data.tokopedia_per_daerah);
+          setshopee(response.data.shopee_per_daerah);
+          setlazada(response.data.lazada_per_daerah);
+          setbukalapak(response.data.bukalapak_per_daerah);
           setLoading(false);
         })
         .catch(error => {
@@ -37,13 +37,13 @@ const MultipleBarChart = () => {
         });
     }, []);
 
-  let ProvinsiInstagram = Instagram.map((el) => el?.nama_provinsi);
-  let JumlahInstagram = Instagram.map((el) => el?.total_user);
-  let JumlahTiktok = Tiktok.map((el) => el?.total_user);
-  let JumlahFacebook = Facebook.map((el) => el?.total_user);
-  // let JumlahTwitter = Twitter.map((el) => el?.total_user);
-  // console.log('NI ProvinsiInstagram',ProvinsiInstagram)
-  // console.log('NI Jumlah Instagram',JumlahInstagram)
+  let Provinsitokopedia = tokopedia.map((el) => el?.nama_provinsi);
+  let Jumlahtokopedia = tokopedia.map((el) => el?.total_user);
+  let Jumlahshopee = shopee.map((el) => el?.total_user);
+  let Jumlahlazada = lazada.map((el) => el?.total_user);
+  let Jumlahbukalapak = bukalapak.map((el) => el?.total_user);
+  // console.log('NI Provinsitokopedia',Provinsitokopedia)
+  // console.log('NI Jumlah tokopedia',Jumlahtokopedia)
 
   const chartData = {
     options: {
@@ -70,7 +70,7 @@ const MultipleBarChart = () => {
       },
       xaxis: {
         // categories: ['MOJOKERTO', 'YOGYAKARTA', 'SURAKARTA', 'PEMATANG SIANTAR'],
-        categories: ProvinsiInstagram,
+        categories: Provinsitokopedia,
         labels: {
           style: {
             display: 'none',
@@ -89,21 +89,25 @@ const MultipleBarChart = () => {
     },
     series: [
       {
-        name: 'Instagram',
+        name: 'tokopedia',
         // data: [323, 545, 656, 343],
-        data: JumlahInstagram,
+        data: Jumlahtokopedia,
       },
       {
-        name: 'Tiktok',
+        name: 'shopee',
         // data: [454, 543, 243, 546],
-        data: JumlahTiktok,
+        data: Jumlahshopee,
       },
       {
-        name: 'Facebook',
+        name: 'lazada',
         // data: [234, 454, 532, 646],
-        data: JumlahFacebook,
+        data: Jumlahlazada,
       },
-     
+      {
+        name: 'bukalapak',
+        // data: [435, 432, 654, 556],
+        data: Jumlahbukalapak,
+      },
     ],
   };
 
