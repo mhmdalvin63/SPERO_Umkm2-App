@@ -38,7 +38,7 @@ const Umkm = () => {
 
     let handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
-setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
+        setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
     };
     
     console.log(selectedValue)
@@ -61,8 +61,9 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
             setDataDaerah(response.data);
                 setLoading(false);
         })
+
         .catch(error => {
-                setLoading(false);
+            setLoading(false);
             console.error('Error fetching data:', error);
         });
 
@@ -84,46 +85,43 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
         return <div style={{ height: '100vh', width: '100%' }}><Loading/></div>;
     }
 
+    console.log('selectedNamaProvinsi',selectedNamaProvinsi)
     return (
         <div className='parent'>
     <div className='sub-parent'>
       <Row>
-        <Col sm={10} className='d-flex align-items-center'>
-        {selectedNamaProvinsi ? (
-            <h4>{selectedNamaProvinsi}</h4>
+        <Col sm={8} md={9} xxl={10} className='d-flex align-items-center'>
+        {selectedNamaProvinsi && selectedNamaProvinsi.length > 0 ? (
+        <h4>{selectedNamaProvinsi}</h4>
         ) : (
-            <h4>Sebaran Wilayah UMKM</h4>
+        <h4>Sebaran Wilayah UMKM</h4>
         )}
         </Col>
-        <Col sm={2}>
+        <Col sm={4} md={3} xxl={2}>
             <div className='form-select-wilayah'>
                 <p className='fwb'>Wilayah UMKM :</p>
                 <Form.Select
-    aria-label="Default select example"
-    value={selectedValue}
-    onChange={handleSelectChange}
-  >
-    <option value=''></option>
-    {DataDaerah.map((option) => (
-      <option key={option.id_provinsi} value={option.id_provinsi}>
-        {option.nama_provinsi}
-      </option>
-    ))}
-  </Form.Select>
-
-  {/* Display the selected value (you can use it as needed) */}
-  {/* <p>Selected Value: {selectedValue}</p> */}
+                    aria-label="Default select example"
+                    value={selectedValue}
+                    onChange={handleSelectChange}
+                >
+                    <option value='1'></option>
+                    {DataDaerah.map((option) => (
+                    <option key={option.id_provinsi} value={option.id_provinsi}>
+                        {option.nama_provinsi}
+                    </option>
+                    ))}
+                </Form.Select>
             </div>
         </Col>
       </Row>
       {console.log('Selected Value:', selectedValue)}
-      {(!selectedValue || typeof selectedValue !== 'string' || selectedValue.length === 0) ? (
-               <>
+        {(!selectedValue || typeof selectedValue !== 'string' || selectedValue.length === 1) ? (
+            <>
                 {console.log('rendering svgMaps')}
                 <SvgMaps />
-                {/* <h1>hello world</h1> */}
-                 </>
-            ) : (
+            </>
+        ) : (
       <div>
             <Row className='align-items-center'>
                     <Col sm={12}>
@@ -131,9 +129,8 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                     </Col>
             </Row>
 
-            <Row>
-            <Col sm={4} className='content-left'>
-                    <div className='my-3 totalBorder p-3' id='total-umkm'>
+                <div className='grid-list-umkm'>
+                    <div className='totalUmkm my-3 totalBorder p-3' id='total-umkm'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='d-flex justify-content-center align-items-center w-100 h-100'>
@@ -172,7 +169,7 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                         </div>
                     </div>
 
-                    <div className='my-3 totalBorder p-3' id='skala-usaha'>
+                    <div className='skalaUsaha my-3 totalBorder p-3' id='skala-usaha'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='content-skala-usaha'>
@@ -219,56 +216,53 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                             </div>
                         </div>
                     </div>
-            </Col>
 
-                <Col sm={8} className='content-right'>
-                    <div className='flex-at-umkm d-flex gap-2'>
-                    <div className='my-3 totalBorder p-3' id='adopsi-teknologi'>
+                    <div className='sektorUsaha my-3 totalBorder p-3' id='adopsi-teknologi'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='content-adopsi-teknologi'>
-                            <div className='at-header gap-3'>
+                            <div className='at-header d-md-flex d-block text-md-start text-center gap-3'>
                                 <p>Sektor Usaha</p>
                             </div>
                             <hr class="hr-new" />
                             <div className='at-content'>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Kerajinan Tangan</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
                                     <p className='fw-bold cc'>{DataSelect.kerajinan_tangan}</p>
                                 </div>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Fashion</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
                                     <p className='fw-bold cc'>{DataSelect.pakaian}</p>
                                 </div>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Makanan & Minuman</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
                                     <p className='fw-bold cc'>{DataSelect.makanan_minuman}</p>
                                 </div>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Elektronik</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
                                     <p className='fw-bold cc'>76</p>
                                 </div>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Properti</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
                                     <p className='fw-bold cc'>218</p>
                                 </div>
                                 <div className='list-at my-3'>
-                                    <div className='lh0'>
+                                    <div className='sektor-usaha-list lh0'>
                                         <p className='cb'>Otomotif</p>
                                         <img className='LineSektor w-75' src={LineSektor} alt="LineSektor" />
                                     </div>
@@ -278,15 +272,15 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                         </div>
                     </div>
 
-                    <div className='my-3 totalBorder p-3' id='level-umkm'>
+                    <div className='penghasilan my-3 totalBorder p-3' id='level-umkm'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='content-level-umkm'>
-                            <div className='lu-content-umkm h-100 py-3'>
+                            <div className='lu-content-umkm d-xl-flex d-block py-xl-3 py-1'>
                                 <div className='lc-content position-relative text-center'>
                                 <div className='wrap position-relative h-100'>
                                     <h5>Penghasilan</h5>
-                                    <div className='circle-graph position-relative mt-5'>
+                                    <div className='circle-graph position-relative mt-xl-5 mt-2'>
                                     <img className='Circlegraph position-relative' src={Circlegraph} alt="Circlegraph" />
                                     <div className='circle-graph-text lh5'>
                                         <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -300,11 +294,12 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                                     <img className='Bottomleft' src={Bottomright} alt="Bottomleft" />
                                 </div>
                                 </div>
-                                <vr className='vr-umkm' />
+                                <vr className='vr-umkm d-xl-block d-none' />
+                                <hr className='d-xl-none d-block my-4' />
                                 <div className='lc-content position-relative text-center'>
                                 <div className='wrap position-relative h-100'>
                                     <h5>Lama Usaha</h5>
-                                    <div className='circle-graph position-relative mt-5'>
+                                    <div className='circle-graph position-relative mt-xl-5 mt-2'>
                                     <img className='CircleGraph2 position-relative' src={CircleGraph2} alt="CircleGraph2" />
                                     <div className='circle-graph-text lh5'>
                                         <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -320,13 +315,12 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                             </div>
                         </div>
                     </div>
-                    </div>
-                    <div className='flex-at-umkm d-flex gap-2'>
-                    <div className='my-3 totalBorder p-3' id='adopsi-teknologi'>
+
+                    <div className='adopsiTeknologi my-3 totalBorder p-3' id='adopsi-teknologi'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='content-adopsi-teknologi'>
-                            <div className='at-header gap-3'>
+                            <div className='at-header d-md-flex d-block text-md-start text-center gap-3'>
                                 <img className='IconAdopsiTeknologi' src={IconAdopsiTeknologi} alt="IconAdopsiTeknologi" />
                                 <p>Adopsi Teknologi</p>
                             </div>
@@ -360,16 +354,25 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                         </div>
                     </div>
 
-                    <div className='my-3 totalBorder p-3' id='level-umkm'>
+                    <div className='levelUmkm my-3 totalBorder p-3' id='level-umkm'>
                         <div className='top-border'></div>
                         <div className='bottom-border'></div>
                         <div className='content-level-umkm'>
-                            <div className='lu-header gap-3'>
+                            <div className='lu-header d-md-flex d-block text-md-start text-center gap-3'>
                             <img className='IconLevelUmkm' src={IconLevelUmkm} alt="IconLevelUmkm" />
                                 <p>Level UMKM</p>
                             </div>
                             <hr class="hr-new" />
                             <div className='lu-content'>
+                                <div className='list-lu my-2'>
+                                    <div className='llu-left'>
+                                        <p className="fw-bold cc">{DataSelect.level_leader}</p>
+                                        <p className="cb">Leader</p>
+                                    </div>
+                                    <div className='llu-right'>
+                                    <img className='Statistic' src={Statistic} alt="Statistic" />
+                                    </div>
+                                </div>
                                 <div className='list-lu my-2'>
                                     <div className='llu-left'>
                                         <p className="fw-bold cc">{DataSelect.level_novice}</p>
@@ -409,9 +412,7 @@ setselectedNamaProvinsi(event.target.options[event.target.selectedIndex].text)
                             </div>
                         </div>
                     </div>
-                    </div>
-                </Col>
-                </Row>
+                </div>
             </div>  
     )}
     </div>

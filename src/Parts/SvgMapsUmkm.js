@@ -11,7 +11,9 @@ const IndonesiaMap = ({ selectedValue }) => {
   const [regionColors, setRegionColors] = useState({});
   const [countdaerah, setCountDaerah] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cleanedPathsHTML, setCleanedPathsHTML] = useState([]);
   const [duplicatedPaths, setDuplicatedPaths] = useState('');
+  const [viewBox, setViewBox] = useState('0 0 100 100'); // Set initial viewBox
 
   const toTitleCase = (str) => {
     return str.replace(/\b\w/g, (match) => match.toUpperCase());
@@ -19,41 +21,49 @@ const IndonesiaMap = ({ selectedValue }) => {
 
   let selectedValueLower;
 
-if (typeof selectedValue === 'string') {
-  selectedValueLower = toTitleCase(selectedValue.toLowerCase());
-  console.log(selectedValueLower);
-} else {
-  console.error('selectedValue is not a string');
-}
-  
-
-const findDuplicatedPaths = () => {
-  const duplicatedPathsHTML = [];
-  const paths = document.querySelectorAll('path');
-
-  for (const path of paths) {
-    const regionName = path.getAttribute('name');
-    const pathColor = path.style.fill;
-
-    // Check if the path has a blue color and is not the selected region
-    if (pathColor === 'rgb(0, 214, 188)' && regionName === selectedValueLower) {
-      // Hapus properti transform atau atribut lainnya yang mempengaruhi posisi
-      // path.removeAttribute('transform');
-      path.removeAttribute('style'); // Hapus semua gaya (style) jika diperlukan
-      path.setAttribute('transform', null);
-
-      duplicatedPathsHTML.push(path.outerHTML);
-      console.log('duplicatedPathsHTML', duplicatedPathsHTML);
-
-      // Jika Anda hanya ingin satu elemen, keluar dari loop setelah menemukan
-      break; // atau return;
-    }
+  if (typeof selectedValue === 'string') {
+    selectedValueLower = toTitleCase(selectedValue.toLowerCase());
+    console.log(selectedValueLower);
+  } else {
+    console.error('selectedValue is not a string');
   }
 
-  setDuplicatedPaths(duplicatedPathsHTML);
-};
+  const findDuplicatedPaths = () => {
+    const cleanedPathsHTML = [];
+    const paths = document.querySelectorAll('path');
+    let minX = Infinity,
+        minY = Infinity,
+        maxX = -Infinity,
+        maxY = -Infinity;
 
+    for (const path of paths) {
+      const regionName = path.getAttribute('name');
+      const pathColor = path.style.fill;
 
+      if (pathColor === 'rgb(0, 214, 188)' && regionName === selectedValueLower) {
+        path.removeAttribute('style');
+        path.removeAttribute('transform');
+        path.removeAttribute('stroke');  // Add more attributes if needed
+        path.style.fill = '#00D6BC '
+
+        // Add the cleaned HTML directly to the array
+        cleanedPathsHTML.push(cleanUpPathHTML(path.outerHTML));
+
+        // Calculate bounding box
+        const bbox = path.getBBox();
+        minX = Math.min(minX, bbox.x);
+        minY = Math.min(minY, bbox.y);
+        maxX = Math.max(maxX, bbox.x + bbox.width);
+        maxY = Math.max(maxY, bbox.y + bbox.height);
+
+        break;
+      }
+    }
+
+    // Update the viewBox based on the calculated bounding box
+    setViewBox(`${minX} ${minY} ${maxX - minX} ${maxY - minY}`);
+    setDuplicatedPaths(cleanedPathsHTML.join(''));
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem('jwttoken');
@@ -74,7 +84,6 @@ const findDuplicatedPaths = () => {
   }, []);
 
   useEffect(() => {
-    // Set warna berdasarkan data API
     const newRegionColors = {};
     countdaerah.forEach((item) => {
       const formattedRegionName = toTitleCase(item.nama_provinsi.toLowerCase());
@@ -83,7 +92,6 @@ const findDuplicatedPaths = () => {
     });
     setRegionColors(newRegionColors);
 
-    // Find duplicated paths whenever regionColors or selectedValue changes
     findDuplicatedPaths();
   }, [countdaerah, selectedValue]);
 
@@ -93,14 +101,9 @@ const findDuplicatedPaths = () => {
   };
 
   const cleanUpPathHTML = (html) => {
-    // Menghapus atribut atau gaya yang tidak diinginkan, misalnya, 'style' atau 'transform'
     const cleanedHTML = html.replace(/(style|transform)="[^"]*"/g, '');
     return cleanedHTML;
   };
-
-  const renderedHTML = duplicatedPaths.length > 0 ? (
-    <g dangerouslySetInnerHTML={{ __html: cleanUpPathHTML(duplicatedPaths[0]) }} className='cobadah' />
-  ) : null;
 
   if (loading) {
     return (
@@ -113,16 +116,16 @@ const findDuplicatedPaths = () => {
   return (
     <div>
       <Row className='align-items-center'>
-      
         <Col sm={10}>
           <ReactSVG
             src={SvgIndonesia}
             beforeInjection={(svg) => {
               svg.setAttribute('width', '100%');
+            svg.setAttribute('viewBox', '0 0 1100 400');
+
               const paths = svg.querySelectorAll('path');
               paths.forEach((path) => {
                 const regionName = path.getAttribute('name');
-                // Set warna daerah sesuai state
                 path.style.fill = regionColors[regionName] || '#9CB9C7';
               });
             }}
@@ -133,23 +136,22 @@ const findDuplicatedPaths = () => {
             <div className='top-border'></div>
             <div className='bottom-border'></div>
             <div className='content'>
-            <svg width="100%" height="100%" className='cobain'>
-              {duplicatedPaths.map((html, index) => (
-                <g key={index} dangerouslySetInnerHTML={{ __html: cleanUpPathHTML(html) }} className='cobadah'/>
-                
-              ))}
-              
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect width="100%" height="100%" fill='#fff'/>
+              <foreignObject width="100%" height="100%" className='ssssssssss py-3'>
+                <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'max-content', margin: 'auto' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox={viewBox} className='svgsvgsvg'>
+                    <g dangerouslySetInnerHTML={{ __html: duplicatedPaths }} className='cobadah'/>
+                  </svg>
+                </div>
+              </foreignObject>
             </svg>
             </div>
-
           </div>
         </Col>
-        
       </Row>
-      <svg width="100%"
-  height="100vh">
-        {renderedHTML}
-      </svg>
+
+      
     </div>
   );
 };

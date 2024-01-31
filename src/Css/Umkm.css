@@ -1,3 +1,24 @@
+/* ----------------------------- GRID LIST UMKM ----------------------------- */
+
+.grid-list-umkm{
+    display: grid;
+    grid-template-columns: 32.5% 32.5% 32.5%;
+    grid-template-areas: 
+    "totalUmkm sektorUsaha penghasilan"
+    "skalaUsaha sektorUsaha penghasilan"
+    "skalaUsaha adopsiTeknologi levelUmkm"
+    "skalaUsaha adopsiTeknologi levelUmkm";
+    gap: 1rem;
+  }
+  .totalUmkm{ grid-area: totalUmkm; }
+  .skalaUsaha{ grid-area: skalaUsaha; }
+  .sektorUsaha{ grid-area: sektorUsaha; }
+  .penghasilan{ grid-area: penghasilan; }
+  .adopsiTeknologi{ grid-area: adopsiTeknologi; }
+  .levelUmkm{ grid-area: levelUmkm; }
+
+
+
 .circle-graph img{
     width: 100%;
 }
@@ -8,7 +29,7 @@
     transform: translate(-50%, -50%);
 }
 .lu-content-umkm{
-    display: flex;
+    height: 100%;
     justify-content: space-around;
 }
 .content-level-umkm{
@@ -39,4 +60,25 @@
     /* transform: translate(50%, 50%);
     transform-origin: center center; */
     transform: translate(0, 0);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                 RESPONSIVE                                 */
+/* -------------------------------------------------------------------------- */
+@media only screen and (max-width: 1200px) {
+    .circle-graph img{
+        width: 50%;
+    }
+    .lu-content-umkm{
+        height: max-content;
+    }
+}
+@media only screen and (max-width: 992px) {
+    .sektor-usaha-list p{
+        width: 75% !important;
+    }
+    .sektor-usaha-list .LineSektor{
+        width: 65% !important;
+    }
 }

@@ -46,7 +46,7 @@
 }
 .sub-parent-teknologi{
     width: 90vw;
-    margin-top: 8%;
+    margin-top: 10%;
 }
 
 .list-sosmed{
@@ -66,3 +66,22 @@
 .dropdown-menu-sosmed{
     width: 100%;
 }
+
+.list-daerah-dropdown{
+    margin-top: -45rem !important;
+}
+
+
+.cobadah path{
+    fill: #00D6BC;
+}
+.svgsvgsvg{
+    margin: auto;
+    height: max-content !important;
+}
+.ssssssssss{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+

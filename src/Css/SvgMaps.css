@@ -7,6 +7,18 @@
     display: inline-block;
 }
 
+.button-close-maps{
+  border: none;
+  background: none;
+  position: absolute;
+  right: -17.5%;
+  top: -7.5%;
+}
+.button-close-maps Icon{
+  width: 5rem;
+  height: 5rem;
+}
+
 /* Arrow-down element */
 .arrow-down {
     width: 0;
@@ -22,3 +34,18 @@
 .svg-main path{
     fill: #9CB9C7 !important;
 }
+
+.svg-container {
+    max-width: your-max-width-value;
+    width: 100%;
+  }
+  
+  .svg-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .svg-container path {
+    max-width: 100%;
+  }
+  

@@ -23,6 +23,16 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+.dropdown-menu-sosmed{
+    width: 90vw !important;
+    height: 50vh;
+    overflow: auto;
+}
+.haiii{
+    /* display: flex; */
+    align-items: center;
+}
+
 .BottomLogin{
     position: absolute;
     bottom: 0;
@@ -30,4 +40,31 @@
     width: 100%;
     height: 50%;
     object-fit: cover;
+    z-index: -1;
 }
+
+/* --------------------------- flex-dropdown-menu --------------------------- */
+#flex-dropdown-menu{
+    display: flex;
+}
+.list-dropdown-menu{
+    width: 45%;
+}
+
+
+.vertical-line {
+    position: sticky;
+    top: -5%;
+    left: 50%;
+    width: 2px; /* Adjust the width as needed */
+    background-color: #000; /* Adjust the color as needed */
+    transform: translateX(-50%);
+    height: 120%; /* Set height to 100% relative to the parent */
+    overflow: hidden; /* Hide any content overflowing the element */
+  }
+
+  
+  
+  .w-85{
+    width: 85% !important;
+  }

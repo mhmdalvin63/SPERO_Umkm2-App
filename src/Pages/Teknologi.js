@@ -3,6 +3,11 @@ import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 
+import { Icon } from '@iconify/react';
+
+import SvgIndonesia from '../Images/indonesia.svg';
+import { ReactSVG } from 'react-svg';
+
 import MultipleChartSosmed from '../Parts/MultipleChartSosialMedia';
 import MultipleChartMarketplace from '../Parts/MultipleChartMarketplace';
 import Loading from '../Parts/Loading'
@@ -22,395 +27,592 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Teknologi = () => {
-  let urlApi = process.env.REACT_APP_API_URL;
-  const [loading, setLoading] = useState(true);
-  const [SosialMedia, setSosialMedia] = useState([]);
-  const [sosialMediaName, setsosialMediaName] = useState(null);
-  const [Marketplace, setMarketplace] = useState([]);
-  const [markerPlaceName, setmarkerPlaceName] = useState(null);
+  // let urlApi = process.env.REACT_APP_API_URL;
+  // const [combinedData, setCombinedData] = useState([]);
+  // const [marketplaceData1, setMarketplaceData1] = useState([]);
+  // const [marketplaceData2, setMarketplaceData2] = useState([]);
+  // const [marketplaceData3, setMarketplaceData3] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const token = sessionStorage.getItem("jwttoken");
+  const [selectedProvinsi, setSelectedProvinsi] = useState('');
+  const [selectedProvinsiMp, setSelectedProvinsiMp] = useState('');
+  const [duplicatedPaths, setDuplicatedPaths] = useState('');
+  const [viewBox, setViewBox] = useState('0 0 100 100'); // Set initial viewBox
 
-    // useEffect(() => {
+  let JSON_sosmed1 = '{"instagram":{"total_user":1042},"instagram_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":51},{"id_provinsi":24993,"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","total_user":2},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":92},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":113},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":139},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":97},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":169},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":64},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":11},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":21},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":14},{"id_provinsi":75425,"nama_provinsi":"SULAWESI BARAT","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":11},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":4},{"id_provinsi":81877,"nama_provinsi":"PAPUA BARAT","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":252}],"instagram_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":30},{"nama_provinsi":"BANTEN","nama_kabupaten":"cileon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab serang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabserang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":20},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":18},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":12},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":10},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"pandeglang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang ","total_user":15},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangsel","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":19},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"daerah istimewa yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"diy yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"jogjakarta","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":11},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":13},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogya","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kotamadya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kulon progo","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":40},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"slenan","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":15},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakbar","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jaktim","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":15},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":12},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":11},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bandung","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":5},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cianjur","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cimahi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":4},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":6},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kab bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kab bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bandung","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bogor","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bandung","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bekasi","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bogor","total_user":6},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":7},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota depok","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kuningan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"majalengka","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"sukabumi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"tasikmalaya","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banyumas","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"boyolali","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"brebes","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"cilacap","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"demak","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"jepara","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten batang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten karanganyarkota pekalongankabupaten karanganyar","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten tegal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten temanggungkabupaten pemalang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar ","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kebumen","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten ","total_user":10},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota semarang","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota surakarta","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"purworejo","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"rembang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"semar1ang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sragen ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":11},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":8},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"wonogiri","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"bojonegoro","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"bondowoso","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember","total_user":9},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten blitarkabupaten gresikkabupaten mojokerto","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten pacitan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota kediri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":11},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"ngawi","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pacitan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pasuruan","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"surabaya","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"trenggalek","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"tuban","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"tulungagung","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kayong utara","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota pontia ak","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota pontianak","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":14},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kab maba","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kab pulau morotai","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kepulauan sula","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kota ternate","total_user":2},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":5},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"tidore kepulauan","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok timur","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten sumbawa barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota mataram","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat ","total_user":10},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":7},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":11},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur\/selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara\/tanjung","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"loteng","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":13},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"praya","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"sumbawa","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kabupaten manggarai barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kota kupang","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat","total_user":5},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat\/labuan bajo","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"sikka","total_user":1},{"nama_provinsi":"PAPUA","nama_kabupaten":"merauke","total_user":1},{"nama_provinsi":"PAPUA BARAT","nama_kabupaten":"manokwari","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kendari","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":4},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"konawe","total_user":1}],"tiktok":{"total_user":993},"tiktok_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":1},{"id_provinsi":24993,"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","total_user":14},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":29},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":259},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":66},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":267},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":71},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":65},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":1},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":2},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":4},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":213}],"tiktok_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglangkota cilegonkota tangerang selatan","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":10},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"daerah istimewa yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"jogjakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":13},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":12},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":10},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":13},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":13},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":23},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":18},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":21},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":22},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota depok","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"boyolali","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten banjarnegara","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten banjarnegarakota semarangkabupaten kuduskabupaten pekalongankabupaten sukoharjo","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten banyumas","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten batang","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten blora","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten boyolali","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten brebes","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten cilacap","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten demak","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten grobogan","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten jepara","total_user":9},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten karanganyar","total_user":6},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten kebumen","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten kendal","total_user":8},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten kudus","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten magelang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten pati","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten pekalongan","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten pemalang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten pemalangkabupaten temanggung","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten purbalingga","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten purworejo","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten rembang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten semarang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten sragen","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten sukoharjo","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten tegal","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten temanggung","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten wonogiri","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten wonosobo","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kebumen","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota magelang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatiga","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten banyumaskabupaten klatenkabupaten kudus","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten purbalingga","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota semarang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota surakarta","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota tegal","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":132},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"wonogiri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten bangkalan","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten banyuwangi","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten blitar","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten bojonegoro","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten bondowoso","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten gresik","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten gresikkabupaten sampang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten jember","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten jombang","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten kediri","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten lamongan","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten lumajang","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten madiun","total_user":13},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten magetan","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten mojokerto","total_user":8},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten nganjuk","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten ngawi","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten pacitan","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten pamekasan","total_user":11},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten pasuruan","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten ponorogo","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten probolinggo","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten sampang","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten sidoarjo","total_user":8},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten situbondo","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten sumenep","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten trenggalek","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten tuban","total_user":8},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten tulungagung","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota batu","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota batukabupaten kediri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota kediri","total_user":11},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota mojokerto","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":7},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota probolinggo","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota surabaya","total_user":8},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kayong utara","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":1},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kabupaten bangka barat","total_user":3},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kabupaten bangka selatan","total_user":2},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kabupaten bangka tengah","total_user":1},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kabupaten belitung","total_user":3},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kabupaten belitung timur","total_user":2},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"kota pangkal pinang","total_user":3},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kabupaten halmahera selatan","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kabupaten halmahera tengah","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kabupaten pulau morotai","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kota tidore kepulauan","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten bima","total_user":4},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten dompu","total_user":7},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok barat","total_user":7},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok tengah","total_user":5},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok timur","total_user":5},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok utara","total_user":8},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten sumbawa","total_user":3},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten sumbawa barat","total_user":9},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota bima","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota mataram","total_user":10},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":3},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":1}]}';
 
-    //     axios.get(`${urlApi}sosialmedia`)
-    //     .then(response => {
-    //         console.log('SOSIAL MEDIA TEKNOLOGI',response.data);
-    //         setSosialMedia(response.data);
-    //     })
+  let JSON_sosmed2 = '{"facebook":{"total_user":966},"facebook_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":28},{"id_provinsi":24993,"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","total_user":5},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":63},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":96},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":124},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":66},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":182},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":84},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":10},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":25},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":14},{"id_provinsi":75425,"nama_provinsi":"SULAWESI BARAT","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":13},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":3},{"id_provinsi":81877,"nama_provinsi":"PAPUA BARAT","total_user":4},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":248}],"facebook_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":28},{"nama_provinsi":"BANTEN","nama_kabupaten":"cileon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab serang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabserang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":16},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":14},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":18},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":12},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegonkabupaten lebakkota tangerang selatan","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":16},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":14},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":14},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak banten ","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"pandeglang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang ","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":6},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangsel","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":16},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"daerah istimewa yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"diy","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"diy yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"gunungkidul","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"jogjakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":10},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":9},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":10},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kotamadya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kulon progo","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman ","total_user":32},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":6},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakbar","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jaktim","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":11},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":19},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":12},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":21},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":20},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":16},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":22},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":3},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":6},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cianjur","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cimahi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":6},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":4},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kab bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kab bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bandung","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bogor","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bekasi","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bogor","total_user":4},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":6},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota depok","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kuningan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"majalengka","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"sukabumi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"tasikmalaya","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banyumas","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"batang ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"boyolali","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"brebes","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"cilacap","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"demak","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"grobogan","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"jepara","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabtegal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten karanganyar","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten purbalinggakabupaten pekalongankabupaten kendal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten sragen","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten tegal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kebumen","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten","total_user":4},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota pekalongankabupaten semarangkabupaten rembang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten banyumaskabupaten klatenkabupaten kudus","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten purbalingga","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota surakarta","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"purwodadi grobogan","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"rembang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sragen ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":14},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":8},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"tegal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"wonogiri","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"bojonegoro","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"bondowoso","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota kediri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":10},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pacitan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pasuruan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"probolinggo","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"trenggalek","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"tuban","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kayong utara","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota pontianak","total_user":3},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":15},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"sambas","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"singkawang","total_user":1},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka","total_user":1},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka barat","total_user":1},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka tengah","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kab maba","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kab pulau morotai","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kota ternate","total_user":2},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":7},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"tidore","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"tidore kepulauan","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"dompu","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten bima","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok tengah","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok timur","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota bima","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lobar","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat ","total_user":11},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":11},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah\/praya","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":15},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur\/selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara\/tanjung","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"loteng","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":14},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"praya","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"sumbawa","total_user":3},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kabupaten manggarai barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kupang","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat","total_user":3},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat\/labuan bajo","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"sikka","total_user":1},{"nama_provinsi":"PAPUA","nama_kabupaten":"merauke","total_user":2},{"nama_provinsi":"PAPUA BARAT","nama_kabupaten":"manokwari","total_user":2},{"nama_provinsi":"PAPUA BARAT","nama_kabupaten":"manokwari papua barat","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"buton utara","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kendari","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":6},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kota baubau","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"wakatobi","total_user":1}],"lainnya":{"total_user":592},"lainnya_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":11},{"id_provinsi":24993,"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","total_user":1},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":45},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":50},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":101},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":44},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":107},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":27},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":5},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":5},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":8},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":6},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":3},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":179}],"lainnya_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":19},{"nama_provinsi":"BANTEN","nama_kabupaten":"cileon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":14},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak banten ","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"pandeglang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang ","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangsel","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"daerah istimewa yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"diy yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"gunungkidul","total_user":3},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":16},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":15},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":12},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":20},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":9},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jaktim","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":12},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":17},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":8},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":11},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":9},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":14},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":15},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":18},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":11},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":4},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cimahi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":4},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bogor","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":5},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota depok","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"majalengka","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"sukabumi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"tasikmalaya","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"boyolali","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"brebes","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"demak","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"jepara","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten grobogankabupaten klaten","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten tegal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kebumen","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":5},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"wonogiri","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"bondowoso","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten gresikkabupaten sampang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota kediri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pasuruan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":4},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"trenggalek","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kayong utara","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":2},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kepulauan sula","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":4},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"tidore kepulauan","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":4},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":6},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":4},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara\/tanjung","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":5},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"praya","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"sumbawa","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kota kupang","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat\/labuan bajo","total_user":2},{"nama_provinsi":"PAPUA","nama_kabupaten":"merauke","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":5},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"konawe","total_user":1}]}'
 
-    //     .catch(error => {
-    //         console.error('Error fetching data:', error);
-    //     });
+  let JSON_marketplace1 = '{"shopee":{"total_user":406},"shopee_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":12},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":35},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":41},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":82},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":47},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":100},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":12},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":1},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":4},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":3},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":2},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":66}],"shopee_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":12},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab serang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":6},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":15},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":6},{"nama_provinsi":"BANTEN","nama_kabupaten":"lebak","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":13},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":11},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogya","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kulon progo","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman ","total_user":17},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":10},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakbar","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cianjur","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":3},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bandung","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":3},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"tasikmalaya","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kebumen","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota semarang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten pacitan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":6},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"trenggalek","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"tulungagung","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":3},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kota ternate","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok timur","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok utara","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lobar","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram ","total_user":3},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kota kupang","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":1}],"tokopedia":{"total_user":276},"tokopedia_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":5},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":20},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":21},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":58},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":26},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":61},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":6},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":2},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":2},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":1},{"id_provinsi":75425,"nama_provinsi":"SULAWESI BARAT","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":2},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":70}],"tokopedia_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":10},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":10},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":4},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":3},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogya","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":9},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":13},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kabupaten bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bogor","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten banyumaskabupaten klatenkabupaten kudus","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota kediri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"surabaya","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kepulauan sula","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":2},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kabupaten manggarai barat","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kolaka timur","total_user":1}]}'
 
-    // }, []);
+  let JSON_marketplace2 = '{"lazada":{"total_user":166},"lazada_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":2},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":4},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":4},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":44},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":4},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":76},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":5},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":27}],"lazada_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":12},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglangkota cilegonkota tangerang selatan","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":8},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":11},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":15},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":12},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progokabupaten gunung kidulkabupaten bantul","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":3},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten batang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota pekalongankabupaten semarangkabupaten rembang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"gresik","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten bima","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten sumbawa barat","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota bima","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota mataram","total_user":1}],"blibli":{"total_user":166},"blibli_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":1},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":4},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":6},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":40},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":4},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":74},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":1},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":35}],"blibli_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":13},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":12},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":10},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":6},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":12},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":5},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":6},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cianjur","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"banjarnegara ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota magelangkabupaten kendal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten banyumaskabupaten klatenkabupaten kudus","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota salatigakabupaten cilacap","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota bima","total_user":1}]}'
 
-    useEffect(() => {
-      const token = sessionStorage.getItem("jwttoken");
+  let JSON_marketplace3 = '{"bukalapak":{"total_user":151},"bukalapak_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":2},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":5},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":5},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":40},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":5},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":64},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":1},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":28}],"bukalapak_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten lebak","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten pandeglang","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten serang","total_user":7},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":13},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":6},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang selatan","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten bantul","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten gunung kidul","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten kulon progo","total_user":5},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kabupaten sleman","total_user":7},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kota yogyakarta","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman","total_user":4},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten bekasi","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota bekasi","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota depok","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta barat","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta pusat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta selatan","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta timur","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota jakarta utara","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kota tangerang selatan","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"garut","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bogor","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten purbalinggakabupaten semarangkabupaten blora","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"ngawi","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pasuruan","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kota mataram","total_user":1}],"gofood":{"total_user":194},"gofood_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":6},{"id_provinsi":24993,"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","total_user":1},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":13},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":14},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":46},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":24},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":26},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":14},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":4},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":4},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":1},{"id_provinsi":75425,"nama_provinsi":"SULAWESI BARAT","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":4},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":2},{"id_provinsi":81877,"nama_provinsi":"PAPUA BARAT","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":33}],"gofood_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":9},{"nama_provinsi":"BANTEN","nama_kabupaten":"cileon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota serang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"pandeglang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang ","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":3},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":11},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"gunungkidul","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"jogjakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman ","total_user":22},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":8},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"dki jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":3},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":7},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kab bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"brebes","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"wonogiri","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kabupaten malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota pasuruan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"pasuruan","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":3},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"surabaya","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"tulungagung","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota pontianak","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":3},{"nama_provinsi":"KEPULAUAN BANGKA BELITUNG","nama_kabupaten":"bangka barat","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":3},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"tidore","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat ","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok tengah","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":3},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok utara\/tanjung","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"loteng","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":4},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"selong","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"kupang","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat","total_user":1},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat\/labuan bajo","total_user":1},{"nama_provinsi":"PAPUA","nama_kabupaten":"merauke","total_user":1},{"nama_provinsi":"PAPUA BARAT","nama_kabupaten":"manokwari papua barat","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"wakatobi","total_user":1}]}'
 
-      const fetchData = async () => {
-        try {
-          setLoading(true); // Set loading menjadi true sebelum permintaan Axios dimulai
+  let JSON_marketplace4 = '{"shopeefood":{"total_user":92},"shopeefood_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":2},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":8},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":9},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":22},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":10},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":14},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":3},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":3},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":1},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":2},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":18}],"shopeefood_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":6},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota cilegon","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":5},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman ","total_user":14},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"depok","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakbar","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar ","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kota semarang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"malang","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"kota pontianak","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":2},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"kota ternate","total_user":1},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":1}],"grabfood":{"total_user":139},"grabfood_per_provinsi":[{"id_provinsi":6728,"nama_provinsi":"SUMATERA UTARA","total_user":5},{"id_provinsi":26141,"nama_provinsi":"JAWA BARAT","total_user":10},{"id_provinsi":32676,"nama_provinsi":"JAWA TENGAH","total_user":18},{"id_provinsi":41863,"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","total_user":30},{"id_provinsi":42385,"nama_provinsi":"JAWA TIMUR","total_user":15},{"id_provinsi":51578,"nama_provinsi":"BANTEN","total_user":20},{"id_provinsi":54020,"nama_provinsi":"NUSA TENGGARA BARAT","total_user":9},{"id_provinsi":55065,"nama_provinsi":"NUSA TENGGARA TIMUR","total_user":1},{"id_provinsi":58285,"nama_provinsi":"KALIMANTAN BARAT","total_user":2},{"id_provinsi":72551,"nama_provinsi":"SULAWESI TENGGARA","total_user":2},{"id_provinsi":77085,"nama_provinsi":"MALUKU UTARA","total_user":2},{"id_provinsi":78203,"nama_provinsi":"PAPUA","total_user":1},{"id_provinsi":81877,"nama_provinsi":"PAPUA BARAT","total_user":1},{"id_provinsi":81878,"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","total_user":23}],"grabfood_per_kabupaten":[{"nama_provinsi":"BANTEN","nama_kabupaten":"cilegon","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"kab tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"kabupaten tangerang","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"kota tangerang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"pandeglang","total_user":1},{"nama_provinsi":"BANTEN","nama_kabupaten":"serang ","total_user":2},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang","total_user":5},{"nama_provinsi":"BANTEN","nama_kabupaten":"tangerang selatan","total_user":2},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"bantul","total_user":8},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"jogjakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"kodya yogyakarta","total_user":1},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"sleman ","total_user":15},{"nama_provinsi":"DAERAH ISTIMEWA YOGYAKARTA","nama_kabupaten":"yogyakarta","total_user":4},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"bogor","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta barat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta pusat","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta selatan","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta timur","total_user":5},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"jakarta utara","total_user":2},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"kabupaten tangerang","total_user":1},{"nama_provinsi":"Jakarta Metropolitan Area (Jabodetabek)","nama_kabupaten":"tangerang","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bekasi","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"bogor","total_user":3},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"cirebon","total_user":1},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"depok","total_user":2},{"nama_provinsi":"JAWA BARAT","nama_kabupaten":"kota cirebon","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab kendal","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kab pekalongan","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"kabupaten karanganyar","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"karanganyar ","total_user":2},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"klaten","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"magelang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"semar1ang","total_user":1},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"sukoharjo","total_user":3},{"nama_provinsi":"JAWA TENGAH","nama_kabupaten":"surakarta","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"jember ","total_user":2},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota blitar","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota madiun","total_user":1},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"kota malang","total_user":5},{"nama_provinsi":"JAWA TIMUR","nama_kabupaten":"sidoarjo","total_user":1},{"nama_provinsi":"KALIMANTAN BARAT","nama_kabupaten":"pontianak","total_user":2},{"nama_provinsi":"MALUKU UTARA","nama_kabupaten":"ternate","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"kabupaten lombok timur","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok barat","total_user":2},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"lombok timur","total_user":1},{"nama_provinsi":"NUSA TENGGARA BARAT","nama_kabupaten":"mataram","total_user":5},{"nama_provinsi":"NUSA TENGGARA TIMUR","nama_kabupaten":"manggarai barat","total_user":1},{"nama_provinsi":"PAPUA BARAT","nama_kabupaten":"manokwari","total_user":1},{"nama_provinsi":"SULAWESI TENGGARA","nama_kabupaten":"kendari","total_user":1}]}'
+
   
-          const [sosialMediaResponse, MarketplaceResponse] = await Promise.all([
-            axios.get(`${urlApi}sosialmedia`, { headers: {"Authorization" : `Bearer ${token}`} }),
-            axios.get(`${urlApi}marketplace`, { headers: {"Authorization" : `Bearer ${token}`} }),
-          ]);
-  
-          const socialMediaNames = Object.entries(sosialMediaResponse.data).map(([name, data]) => ({ name, data, }));
-          setsosialMediaName(socialMediaNames);
+  let JSONsosmed1 = JSON.parse(JSON_sosmed1);
+  let JSONsosmed2 = JSON.parse(JSON_sosmed2);
+  let JSONmarketplace1 = JSON.parse(JSON_marketplace1);
+  let JSONmarketplace2 = JSON.parse(JSON_marketplace2);
+  let JSONmarketplace3 = JSON.parse(JSON_marketplace3);
+  let JSONmarketplace4 = JSON.parse(JSON_marketplace4);
+// console.log('JSONsosmed1', JSONsosmed1);
+// console.log('JSONsosmed2', JSONsosmed2);
+console.log('JSONmarketplace1', JSONmarketplace1);
+console.log('JSONmarketplace2', JSONmarketplace2);
+console.log('JSONmarketplace3', JSONmarketplace3);
+console.log('JSONmarketplace4', JSONmarketplace4);
 
-          const marketPlaceNames = Object.entries(MarketplaceResponse.data).map(([name, data]) => ({ name, data, }));
-          setmarkerPlaceName(marketPlaceNames);
+
+/* -------------------------------------------------------------------------- */
+/*                              PENGGABUNGAN API                              */
+/* -------------------------------------------------------------------------- */
+
+const mergedSosialmedia = [
+  ...Object.entries(JSONsosmed1).map(([title, value]) => ({ title, data: value })),
+  ...Object.entries(JSONsosmed2).map(([title, value]) => ({ title, data: value })),
+];
+const mergedMarketplace = [
+  ...Object.entries(JSONmarketplace1).map(([title, value]) => ({ title, data: value })),
+  ...Object.entries(JSONmarketplace2).map(([title, value]) => ({ title, data: value })),
+  ...Object.entries(JSONmarketplace3).map(([title, value]) => ({ title, data: value })),
+  ...Object.entries(JSONmarketplace4).map(([title, value]) => ({ title, data: value })),
+];
+// console.log('mergedSosialmedia', mergedSosialmedia)
+// console.log('mergedMarketplace', mergedMarketplace)
+
+/* -------------------------------------------------------------------------- */
+/*                           AKHIR PENGGABUNGAN API                           */
+/* -------------------------------------------------------------------------- */
 
 
-          console.log('sosialMediaResponse',sosialMediaResponse);
-          console.log('MarketplaceResponse',MarketplaceResponse);
+/* --------------------------- LOGIC SOSIAL MEDIA --------------------------- */
 
-          setSosialMedia(sosialMediaResponse.data);
-          setMarketplace(MarketplaceResponse.data);
-  
-          setLoading(false); // Set loading menjadi false setelah semua permintaan Axios selesai
-        } catch (error) {
-          setLoading(false); // Set loading menjadi false jika terjadi kesalahan
-          console.error('Error fetching data:', error);
-        }
-      };
-  
-      fetchData(); // Panggil fungsi fetchData untuk memulai permintaan Axios
-  
-    }, []);
-
-    const evenIndexSocialMedia = sosialMediaName
-    ? sosialMediaName.filter((item, index) => index % 2 === 0)
-    : [];
-    const oddIndexSocialMedia = sosialMediaName
-    ? sosialMediaName.filter((item, index) => index % 2 !== 0)
-    : [];
-    console.log('evenIndexSocialMedia', evenIndexSocialMedia)
-    console.log('oddIndexSocialMedia', oddIndexSocialMedia)
-
-    const evenIndexmarketPlace = markerPlaceName
-    ? markerPlaceName.filter((item, index) => index % 2 === 0)
-    : [];
-    const oddIndexmarketPlace = markerPlaceName
-    ? markerPlaceName.filter((item, index) => index % 2 !== 0)
-    : [];
-    console.log('evenIndexmarketPlace', evenIndexmarketPlace)
-    console.log('oddIndexmarketPlace', oddIndexmarketPlace)
-
-    const capitalizeFirstLetter = (string) => {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    };
-
-    if (loading) {
-        return <div style={{ height: '100%', width: '100%' }}><Loading/></div>;
+  const titleSosialmedia = mergedSosialmedia.map((item, index) => {
+    if (index % 3 === 0) {
+      return item;
     }
+    return null;
+  }).filter(title => title !== null);
+  console.log('titleSosialmedia', titleSosialmedia)
+  const provinsiSosialmedia = mergedSosialmedia.map((item, index) => {
+    if (index % 3 === 1) {
+      return item;
+    }
+    return null;
+  }).filter(title => title !== null);
+  const kabupatenSosialmedia = mergedSosialmedia.map((item, index) => {
+    if (index % 3 === 2) {
+      return item;
+    }
+    return null;
+  }).filter(title => title !== null);
+  let namaProvinsi = [];
+  const dataProvinsi = provinsiSosialmedia.map((innerArray, outerIndex) => {
+    return innerArray.data.map((element, innerIndex) => {
+      return element;
+    });
+  });
+  dataProvinsi.forEach(innerArray => {
+    innerArray.forEach(element => {
+      const existingProvinsi = namaProvinsi.find(provinsi => provinsi.id_provinsi === element.id_provinsi);
+  
+      if (existingProvinsi) {
+        // Jika provinsi sudah ada, tidak perlu tambahkan nama_provinsi yang baru
+      } else {
+        // Jika provinsi belum ada, tambahkan provinsi baru ke dalam array
+        namaProvinsi.push({
+          id_provinsi: element.id_provinsi,
+          nama_provinsi: element.nama_provinsi
+        });
+      }
+    });
+  });
+  // Gabungkan nama_provinsi menjadi satu string tanpa koma
+  namaProvinsi.forEach(provinsi => {
+    provinsi.nama_provinsi = provinsi.nama_provinsi.split(', ').join(' ');
+  });
+  // console.log('namaProvinsi', namaProvinsi);
+
+/* ------------------------ AKHIR LOGIC SOSIAL MEDIA ------------------------ */
+
+
+/* ---------------------------- LOGIC MARKETPLACE --------------------------- */
+
+  const titleMarketplace = mergedMarketplace.map((item, index) => {
+    if (index % 3 === 0) {
+      return item;
+    }
+    return null;
+  }).filter(title => title !== null);
+  console.log('titleMarketplace', titleMarketplace)
+  const provinsiMarketplace = mergedMarketplace.map((item, index) => {
+    if (index % 3 === 1) {
+      return item;
+    }
+    return null;
+  }).filter(title => title !== null);
+  const kabupatenMarketplace = mergedMarketplace.map((item, index) => {
+    if (index % 3 === 2) {
+      return item;
+    }
+    return null;
+  }).filter(title => title !== null);
+  console.log('kabupatenMarketplace', kabupatenMarketplace)
+  let namaProvinsiMp = [];
+  const dataProvinsiMp = provinsiMarketplace.map((innerArray, outerIndex) => {
+    return innerArray.data.map((element, innerIndex) => {
+      return element;
+    });
+  });
+  dataProvinsiMp.forEach(innerArray => {
+    innerArray.forEach(element => {
+      const existingProvinsi = namaProvinsiMp.find(provinsi => provinsi.id_provinsi === element.id_provinsi);
+  
+      if (existingProvinsi) {
+        // Jika provinsi sudah ada, tidak perlu tambahkan nama_provinsi yang baru
+      } else {
+        // Jika provinsi belum ada, tambahkan provinsi baru ke dalam array
+        namaProvinsiMp.push({
+          id_provinsi: element.id_provinsi,
+          nama_provinsi: element.nama_provinsi
+        });
+      }
+    });
+  });
+  // Gabungkan nama_provinsi menjadi satu string tanpa koma
+  namaProvinsiMp.forEach(provinsi => {
+    provinsi.nama_provinsi = provinsi.nama_provinsi.split(', ').join(' ');
+  });
+  console.log('dataProvinsiMp', dataProvinsiMp);
+  console.log('namaProvinsiMp', namaProvinsiMp);
+
+  /* ------------------------- AKHIR LOGIC MARKETPLACE ------------------------ */
+
+  const combineAndSumUsers = (data) => {
+    const combinedData = {};
+    
+    // Loop melalui data untuk menyatukan dan menjumlahkan
+    data.forEach(item => {
+      const key = item.nama_kabupaten;
+      const existingData = combinedData[key];
+  
+      if (existingData) {
+        existingData.total_user += item.total_user;
+      } else {
+        combinedData[key] = { ...item };
+      }
+    });
+  
+    // Mengembalikan array hasil penggabungan
+    return Object.values(combinedData);
+  };
+
+  // Fungsi untuk mengonversi huruf pertama menjadi huruf besar
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+  const handleSelectChange = (event) => {
+    setSelectedProvinsi(event.target.value);
+  };
+  const handleSelectChangeMp = (event) => {
+    setSelectedProvinsiMp(event.target.value);
+  };
+
+  const cleanUpPathHTML = (html) => {
+    const cleanedHTML = html.replace(/(style|transform)="[^"]*"/g, '');
+    return cleanedHTML;
+  };
+
+  const getBoundingBox = (elements) => {
+    let minX = Infinity,
+      minY = Infinity,
+      maxX = -Infinity,
+      maxY = -Infinity;
+  
+    elements.forEach((element) => {
+      const bbox = element.getBBox();
+      minX = Math.min(minX, bbox.x);
+      minY = Math.min(minY, bbox.y);
+      maxX = Math.max(maxX, bbox.x + bbox.width);
+      maxY = Math.max(maxY, bbox.y + bbox.height);
+    });
+  
+    const width = maxX - minX;
+    const height = maxY - minY;
+  
+    const padding = 10; // Add some padding if needed
+  
+    return `${minX - padding} ${minY - padding} ${width + 2 * padding} ${height + 2 * padding}`;
+  };
+
+  let seriesColors = ['#638889','#E6A4B4','#80BCBD','#FFB996','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
+  
+  
     return (
       <div className="parent-teknologi">
         <div className="sub-parent-teknologi">
 
+{/* /* --------------------------------- SOSMED --------------------------------- */}
           <div className='d-flex align-items-center gap-2'>
             <img className='IconSosmed' src={IconSosmed} alt="IconSosmed" />
             <p className='fw-bold'>SOSIAL MEDIA</p>
           </div>
-          <div>
-          {/* Render komponen lain atau tampilkan data sesuai kebutuhan */}
-        </div>
-            <div className="sosial-media my-3">
-                <Row>
-                {evenIndexSocialMedia.map((evenItem, evenIndex) => (
-  <Col sm={3} key={evenIndex}>
-    <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-      <div className='img-chart'>
-        <img className='Instagram' src={Instagram} alt="Instagram" />
-      </div>
-      <div className='total-chart mt-lg-0 mt-2'>
-        <h3>{evenItem.data.total_user}</h3>
-        <h4 className='cc'>{capitalizeFirstLetter(evenItem.name)}</h4>
-      </div>
-    </div>
-    <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        {oddIndexSocialMedia[evenIndex].data.map((oddItem, oddIndex) => (
-            <div key={oddIndex}>
-              <p>{evenIndex} - {oddItem.nama_kabupaten} - {oddItem.total_user}</p>
-            </div>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  </Col>
-))}
-
-                    {/* <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Instagram' src={Instagram} alt="Instagram" />
-                            </div>
-                            <div className='total-chart mt-lg-0 mt-2'>
-                                <h3>{SosialMedia?.instagram?.total_user}</h3>
-                                <h4 className='cc'>Instagram</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Tiktok' src={Tiktok} alt="Tiktok" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{SosialMedia?.tiktok?.total_user}</h3>
-                                <h4 className='cc'>Tiktok</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Facebook' src={Facebook} alt="Facebook" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{SosialMedia?.facebook?.total_user}</h3>
-                                <h4 className='cc'>Facebook</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Twitter' src={Twitter} alt="Twitter" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{SosialMedia?.twitter?.total_user}</h3>
-                                <h4 className='cc'>Twitter</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col> */}
-                </Row>
-            </div>
-
-            <div className='chart-sosial-media p-3'>
-                <div className='content-csm mx-3'>
-                  <div> <h5>Sosial Media</h5> </div>
-                  <Form.Select className='w-25' aria-label="Default select example">
-                    <option>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                </div>
-                {/* <MultipleChartSosmed /> */}
-                  <div className='chart-title justify-content-center my-2 gap-3'>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval ig'></div>
-                      <p>Instagram</p>
+          <div className="sosial-media my-3">
+              <Row>
+              {titleSosialmedia.map((evenItem, evenIndex) => (
+                <Col sm={3} key={evenIndex}>
+                  <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
+                    <div className='img-chart'>
+                      <img className='Instagram' src={Instagram} alt="Instagram" />
                     </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval tt'></div>
-                      <p>Tiktok</p>
-                    </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval fb'></div>
-                      <p>Facebook</p>
-                    </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval x'></div>
-                      <p>Twitter</p>
+                    <div className='total-chart mt-lg-0 mt-2'>
+                      {/* <h3>{evenIndex}</h3> */}
+                      <h3>{evenItem.data.total_user}</h3>
+                      <h4 className='cc'>{evenItem.title}</h4>
                     </div>
                   </div>
-            </div>
+                  <Dropdown>
+                    <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
+                      List Daerah
+                    </Dropdown.Toggle>
 
+{/* /* ------------------------------ DROPDOWN MENU ----------------------------- */}
+
+                    <Dropdown.Menu className='dropdown-menu-sosmed position-relative'>
+                      {/* <h4 className='text-center'>{evenItem.title}</h4> */}
+                      <div className="vertical-line"></div>
+                      {(() => {
+
+                        const capitalizeFirstLetter = (str) => {
+                          return str.replace(/\b\w/g, (match) => match.toUpperCase());
+                        };
+
+                        const combinedItems = combineAndSumUsers(kabupatenSosialmedia[evenIndex].data).reduce((acc, combinedItem) => {
+                          const existingIndex = acc.findIndex(item => item.nama_provinsi.toLowerCase() === combinedItem.nama_provinsi.toLowerCase());
+                          if (existingIndex !== -1) {
+                            acc[existingIndex].total_user += combinedItem.total_user;
+                            acc[existingIndex].details.push({
+                              nama_daerah: capitalizeFirstLetter(combinedItem.nama_kabupaten.toLowerCase()),
+                              total_user: combinedItem.total_user,
+                            });
+                          } else {
+                            acc.push({
+                              nama_provinsi: capitalizeFirstLetter(combinedItem.nama_provinsi.toLowerCase()), // Capitalize first letter of each word
+                              total_user: combinedItem.total_user,
+                              details: [{
+                                nama_daerah: capitalizeFirstLetter(combinedItem.nama_kabupaten.toLowerCase()),
+                                total_user: combinedItem.total_user,
+                              }],
+                            });
+                          }
+                          return acc;
+                        }, []);
+
+                        console.log('Combined Items:', combinedItems);
+
+                        return (
+                          <div style={{ height: '100%', position: 'relative' }}>
+                            <Row className='list-daerah-dropdown'>
+                              {combinedItems.map((combinedItem, combinedIndex) => (
+                                <Col key={combinedIndex} sm={6} className="position-relative">
+                                  {/* <h3>{combinedItem.nama_provinsi}</h3> */}
+                                  <Row className='haiii my-5'>
+                                    <div className='d-flex align-items-center gap-1'>
+                                      <h3 className='mb-3'><Icon icon="healthicons:city" /></h3>
+                                      <h5 className='fwb cc text-start mb-2'>{combinedItem.nama_provinsi}</h5>
+                                    </div>
+                                    <Col sm={4}>
+                                      <ReactSVG
+                                        src={SvgIndonesia}
+                                        beforeInjection={(svg) => {
+                                          svg.setAttribute('width', '100%');
+                                          const paths = svg.querySelectorAll('path');
+                                          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                        
+                                          paths.forEach((path) => {
+                                            const pathName = path.getAttribute('name');
+                                            if (pathName === combinedItem.nama_provinsi) {
+                                              const pathLength = path.getTotalLength();
+                                              const pathPoints = [];
+                                              for (let i = 0; i < pathLength; i += pathLength / 100) {
+                                                const point = path.getPointAtLength(i);
+                                                pathPoints.push(point);
+                                                minX = Math.min(minX, point.x);
+                                                minY = Math.min(minY, point.y);
+                                                maxX = Math.max(maxX, point.x);
+                                                maxY = Math.max(maxY, point.y);
+                                              }
+                                              path.style.strokeWidth = pathLength * 0.75; // Set the width to 75% of the path length
+                                            }
+                                          });
+                        
+                                          const width = maxX - minX;
+                                          const height = maxY - minY;
+                                          const centerX = minX + width / 2;
+                                          const centerY = minY + height / 2;
+                        
+                                          const viewBox = `${centerX - width / 2} ${centerY - height / 2} ${width} ${height}`;
+                                          svg.setAttribute('viewBox', viewBox);
+                        
+                                          paths.forEach((path) => {
+                                            const pathName = path.getAttribute('name');
+                                            if (pathName === combinedItem.nama_provinsi) {
+                                              path.removeAttribute('style');
+                                              path.removeAttribute('transform');
+                                              path.removeAttribute('stroke');
+                                              path.style.fill = 'blue';
+                                            } else {
+                                              path.remove();
+                                            }
+                                          });
+                                        }}
+                                      />
+                                    </Col>
+                                    <Col sm={8} className="position-relative">
+                                      {combinedItem.details.map((detail, detailIndex) => (
+                                        <div key={detailIndex} className="w-85 d-flex align-items-center flex-grow-1">
+                                          {/* Add an arrow before the <p> tag */}
+                                          <h3 className='mb-1'><Icon icon="ic:round-arrow-right-alt" /></h3>
+                                          <div className='d-flex justify-content-between align-items-center w-100'>
+                                            <p>{detail.nama_daerah}</p>
+                                            <h5 className='cc fwb'>{detail.total_user}</h5>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              ))}
+                            </Row>
+                          </div>
+                        );
+                        
+                      })()}
+                    </Dropdown.Menu>
+
+{/* ------------------------------ DROPDOWN MENU ----------------------------- */}
+
+                  </Dropdown>
+                </Col>
+              ))}
+              </Row>
+          </div>
+          <div className='chart-sosial-media p-3'>
+              <div className='content-csm mx-3'>
+                <div> <h5>Sosial Media</h5> </div>
+                <Form.Select
+                  className='w-25'
+                  aria-label="Provinsi Select"
+                  value={selectedProvinsi}
+                  onChange={handleSelectChange}
+                >
+                  <option>Pilih Provinsi...</option>
+                  {namaProvinsi.map((provinsi) => (
+                    <option key={provinsi.id_provinsi} value={provinsi.nama_provinsi}>
+                      {provinsi.nama_provinsi}
+                    </option>
+                  ))}
+                </Form.Select>
+              </div>
+              <MultipleChartSosmed selectedProvinsi={selectedProvinsi}/>
+                <div className='chart-title justify-content-center my-2 gap-3'>
+                  {titleSosialmedia.map((item, index) => (
+                    <div className='content-chart-title gap-1'>
+                      <div className='oval' style={{ backgroundColor : seriesColors[index] }}></div>
+                      {/* <p>{index}</p> */}
+                      <p>{item.title}</p>
+                    </div>
+                  ))}
+                </div>
+          </div>
+{/* /* --------------------------------- SOSMED --------------------------------- */}
+
+
+{/* ------------------------------- MARKETPLACE ------------------------------ */}
           <div className='d-flex align-items-center gap-2 mt-4'>
             <img className='IconSosmed' src={IconSosmed} alt="IconSosmed" />
             <p className='fw-bold'>MARKETPLACE</p>
           </div>
-            <div className="sosial-media my-3">
-                <Row>
-                {evenIndexmarketPlace.map((evenItem, evenIndex) => (
-  <Col sm={3} key={evenIndex}>
-    <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-      <div className='img-chart'>
-        <img className='Instagram' src={Instagram} alt="Instagram" />
-      </div>
-      <div className='total-chart mt-lg-0 mt-2'>
-        <h3>{evenItem.data.total_user}</h3>
-        <h4 className='cc'>{capitalizeFirstLetter(evenItem.name)}</h4>
-      </div>
-    </div>
-    <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        {oddIndexmarketPlace[evenIndex].data.map((oddItem, oddIndex) => (
-            <div key={oddIndex}>
-              <p>{evenIndex} - {oddItem.nama_kabupaten} - {oddItem.total_user}</p>
-            </div>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  </Col>
-))}
-                    {/* <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Tokopedia' src={Tokopedia} alt="Tokopedia" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{Marketplace?.tokopedia?.total_user}</h3>
-                                <h4 className='cc'>Tokopedia</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Shopee' src={Shopee} alt="Shopee" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{Marketplace?.shopee?.total_user}</h3>
-                                <h4 className='cc'>Shopee</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Lazada' src={Lazada} alt="Lazada" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{Marketplace?.lazada?.total_user}</h3>
-                                <h4 className='cc'>Lazada</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col>
-                    <Col sm={3}>
-                        <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
-                            <div className='img-chart'>
-                            <img className='Zalora' src={Zalora} alt="Zalora" />
-                            </div>
-                            <div className='total-chart  mt-lg-0 mt-2'>
-                                <h3>{Marketplace?.bukalapak?.total_user}</h3>
-                                <h4 className='cc'>Zalora</h4>
-                            </div>
-                        </div>
-                        <Dropdown>
-      <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
-        List Daerah
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu className='dropdown-menu-sosmed'>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-                    </Col> */}
-                </Row>
-            </div>
-
-            <div className='chart-sosial-media p-3'>
-                <div className='content-csm mx-3'>
-                  <h5>Marketplace</h5>
-                  <div className='chart-title gap-3'>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval ig'></div>
-                      <p>Tokopedia</p>
+          <div className="sosial-media my-3">
+              <Row>
+              {titleMarketplace.map((evenItem, evenIndex) => (
+                <Col sm={3} key={evenIndex}>
+                  <div className='list-sosmed  d-lg-flex d-block text-lg-start umkm text-center gap-3'>
+                    <div className='img-chart'>
+                      <img className='Instagram' src={Instagram} alt="Instagram" />
                     </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval tt'></div>
-                      <p>Shopee</p>
-                    </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval fb'></div>
-                      <p>Lazada</p>
-                    </div>
-                    <div className='content-chart-title gap-1'>
-                      <div className='oval x'></div>
-                      <p>Zalora</p>
+                    <div className='total-chart mt-lg-0 mt-2'>
+                    {/* <h3>{evenIndex}</h3> */}
+                      <h3>{evenItem.data.total_user}</h3>
+                      <h4 className='cc'>{evenItem.title}</h4>
                     </div>
                   </div>
+                  <Dropdown>
+                    <Dropdown.Toggle className='dropdown-sosmed my-3' id="dropdown-basic">
+                      List Daerah
+                    </Dropdown.Toggle>
+
+{/* /* ------------------------------ DROPDOWN MENU ----------------------------- */}
+
+                    {/* <Dropdown.Menu className='dropdown-menu-sosmed'>
+                      {combineAndSumUsers(kabupatenMarketplace[evenIndex].data).map((combinedItem, combinedIndex) => (
+                        <div key={combinedIndex}>
+                          <p>{evenIndex} - {combinedItem.nama_kabupaten} - {combinedItem.total_user}</p>
+                        </div>
+                      ))}
+                    </Dropdown.Menu> */}
+
+                    <Dropdown.Menu className='dropdown-menu-sosmed'>
+                      {/* <h4 className='text-center'>{evenItem.title}</h4> */}
+                      <div className="vertical-line"></div>
+                      {(() => {
+
+                        const capitalizeFirstLetter = (str) => {
+                          return str.replace(/\b\w/g, (match) => match.toUpperCase());
+                        };
+
+                        const combinedItems = combineAndSumUsers(kabupatenMarketplace[evenIndex].data).reduce((acc, combinedItem) => {
+                          const existingIndex = acc.findIndex(item => item.nama_provinsi.toLowerCase() === combinedItem.nama_provinsi.toLowerCase());
+                          if (existingIndex !== -1) {
+                            acc[existingIndex].total_user += combinedItem.total_user;
+                            acc[existingIndex].details.push({
+                              nama_daerah: capitalizeFirstLetter(combinedItem.nama_kabupaten.toLowerCase()),
+                              total_user: combinedItem.total_user,
+                            });
+                          } else {
+                            acc.push({
+                              nama_provinsi: capitalizeFirstLetter(combinedItem.nama_provinsi.toLowerCase()), // Capitalize first letter of each word
+                              total_user: combinedItem.total_user,
+                              details: [{
+                                nama_daerah: capitalizeFirstLetter(combinedItem.nama_kabupaten.toLowerCase()),
+                                total_user: combinedItem.total_user,
+                              }],
+                            });
+                          }
+                          return acc;
+                        }, []);
+
+                        console.log('Combined Items:', combinedItems);
+
+                        return (
+                          <div style={{ height: '100%', position: 'relative' }}>
+                            <Row className='list-daerah-dropdown'>
+                              {combinedItems.map((combinedItem, combinedIndex) => (
+                                <Col key={combinedIndex} sm={6} className="position-relative">
+                                  <Row className='haiii my-5'>
+                                    <div className='d-flex align-items-center gap-1'>
+                                      <h3 className='mb-3'><Icon icon="healthicons:city" /></h3>
+                                      <h5 className='fwb cc text-start mb-2'>{combinedItem.nama_provinsi}</h5>
+                                    </div>
+                                    <Col sm={4}>
+                                      <ReactSVG
+                                        src={SvgIndonesia}
+                                        beforeInjection={(svg) => {
+                                          svg.setAttribute('width', '100%');
+                                          const paths = svg.querySelectorAll('path');
+                                          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                        
+                                          paths.forEach((path) => {
+                                            const pathName = path.getAttribute('name');
+                                            if (pathName === combinedItem.nama_provinsi) {
+                                              const pathLength = path.getTotalLength();
+                                              const pathPoints = [];
+                                              for (let i = 0; i < pathLength; i += pathLength / 100) {
+                                                const point = path.getPointAtLength(i);
+                                                pathPoints.push(point);
+                                                minX = Math.min(minX, point.x);
+                                                minY = Math.min(minY, point.y);
+                                                maxX = Math.max(maxX, point.x);
+                                                maxY = Math.max(maxY, point.y);
+                                              }
+                                              path.style.strokeWidth = pathLength * 0.75; // Set the width to 75% of the path length
+                                            }
+                                          });
+                        
+                                          const width = maxX - minX;
+                                          const height = maxY - minY;
+                                          const centerX = minX + width / 2;
+                                          const centerY = minY + height / 2;
+                        
+                                          const viewBox = `${centerX - width / 2} ${centerY - height / 2} ${width} ${height}`;
+                                          svg.setAttribute('viewBox', viewBox);
+                        
+                                          paths.forEach((path) => {
+                                            const pathName = path.getAttribute('name');
+                                            if (pathName === combinedItem.nama_provinsi) {
+                                              path.removeAttribute('style');
+                                              path.removeAttribute('transform');
+                                              path.removeAttribute('stroke');
+                                              path.style.fill = 'blue';
+                                            } else {
+                                              path.remove();
+                                            }
+                                          });
+                                        }}
+                                      />
+                                    </Col>
+                                    <Col sm={8} className="position-relative">
+                                      {combinedItem.details.map((detail, detailIndex) => (
+                                        <div key={detailIndex} className="w-85 d-flex align-items-center flex-grow-1">
+                                          {/* Add an arrow before the <p> tag */}
+                                          <h3 className='mb-1'><Icon icon="ic:round-arrow-right-alt" /></h3>
+                                          <div className='d-flex justify-content-between align-items-center w-100'>
+                                            <p>{detail.nama_daerah}</p>
+                                            <h5 className='cc fwb'>{detail.total_user}</h5>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              ))}
+                            </Row>
+                          </div>
+                        );
+                        
+                      })()}
+                    </Dropdown.Menu>
+
+{/* /* ------------------------------ DROPDOWN MENU ----------------------------- */}
+
+                  </Dropdown>
+                </Col>
+              ))}
+            </Row>
+          </div>
+          <div className='chart-sosial-media p-3'>
+              <div className='content-csm mx-3'>
+                <div> <h5>Sosial Media</h5> </div>
+                <Form.Select
+                  className='w-25'
+                  aria-label="Provinsi Select"
+                  value={selectedProvinsiMp}
+                  onChange={handleSelectChangeMp}
+                >
+                  <option>Pilih Provinsi...</option>
+                  {namaProvinsiMp.map((provinsi) => (
+                    <option key={provinsi.id_provinsi} value={provinsi.nama_provinsi}>
+                      {provinsi.nama_provinsi}
+                    </option>
+                  ))}
+                </Form.Select>
+              </div>
+              <MultipleChartMarketplace selectedProvinsi={selectedProvinsiMp}/>
+                <div className='chart-title justify-content-center my-2 gap-3'>
+                  {titleMarketplace.map((item, index) => (
+                    <div className='content-chart-title gap-1'>
+                      <div className='oval' style={{ backgroundColor : seriesColors[index] }}></div>
+                      {/* <p>{index}</p> */}
+                      <p>{item.title}</p>
+                    </div>
+                  ))}
                 </div>
-                {/* <MultipleChartMarketplace /> */}
-            </div>
+          </div>
+{/* ------------------------------- MARKETPLACE ------------------------------ */}
             
         </div>
       </div>

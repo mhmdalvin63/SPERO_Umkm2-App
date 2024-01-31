@@ -45,7 +45,7 @@
     margin-left: 1%;
     align-self: center;
     width: var(--bs-border-width);
-    height: 2.5em !important;
+    height: 4em !important;
     background-color: currentcolor;
     opacity: .25;
 }
@@ -97,6 +97,16 @@
   .bottom-border:after {
     border-right: 2px solid #0A354A;
   }
+
+/* #adopsi-teknologi{
+  height: 100%;
+}
+#level-umkm{
+  height: 100%;
+}
+#skala-usaha{
+  height: 100%;
+} */
   
 /* ----- CONTENT TOTAL UMKM -----*/
 .content-man{
@@ -213,7 +223,7 @@
 /* ----- LEVEL UMKM ----- */
 .flex-at{
   width: 100%; 
-  height: max-content;
+  height: 100%;
 }
 .lu-header{
     align-items: center;
@@ -269,21 +279,54 @@
 
 
 
-.button-close-maps{
-  border: none;
-  background: none;
-  position: absolute;
-  right: -30px;
-  top: -10px;
+
+
+
+/* ----------------------------- GRID LIST UMKM ----------------------------- */
+
+.grid-list-main{
+  display: grid;
+  grid-template-columns: 30% 33.5% 33.5%;
+  grid-template-areas: 
+  "mainTu mainMaps mainMaps"
+  "mainSu mainMaps mainMaps"
+  "mainSu mainAt mainLu"
+  "mainSu mainAt mainLu";
+  gap: 1rem;
 }
+.mainTu{ grid-area: mainTu; }
+.mainMaps{ grid-area: mainMaps; }
+.mainSu{ grid-area: mainSu; }
+.mainAt{ grid-area: mainAt; }
+.mainLu{ grid-area: mainLu; }
+
+/* -------------------------------------------------------------------------- */
+/*                                 RESPONSIVE                                 */
+/* -------------------------------------------------------------------------- */
 
 @media only screen and (max-width: 768px) {
   .content-left {
     height: max-content;
   }
-}
-@media only screen and (min-width: 768px) {
-  #skala-usaha{
-    flex: 1;
+  .mainTu{
+    width: max-content;
+    margin: 0 auto;
+  }
+  .grid-list-main{
+    display: grid;
+    grid-template-columns: 32.5% 32.5% 32.5%;
+    grid-template-areas: 
+    "mainTu mainTu mainTu"
+    "mainMaps mainMaps mainMaps"
+    "mainSu mainAt mainLu"
+    "mainSu mainAt mainLu";
+    gap: 1rem;
   }
 }
+/* @media only screen and (min-width: 768px) {
+  #skala-usaha{
+    flex: 5 5;
+  }
+} */
+
+

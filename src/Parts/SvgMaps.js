@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../Parts/Loading';
 
+import '../Css/SvgMaps.css'
+
 import { Icon } from '@iconify/react';
 
 const IndonesiaMap = () => {
@@ -16,6 +18,10 @@ const IndonesiaMap = () => {
   const [countdaerah, setcountdaerah] = useState([]);
   const [selectedRegionData, setSelectedRegionData] = useState(null);
   const [markerStyle, setMarkerStyle] = useState({ display: 'none', left: 0, top: 0 });
+
+  const [renderCounter, setRenderCounter] = useState(0);
+  const [lastSentIdProvinsi, setLastSentIdProvinsi] = useState(null);
+
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwttoken");
@@ -61,11 +67,14 @@ const IndonesiaMap = () => {
   // }
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className='svg-container' style={{ position: 'relative', width : '100%' }}>
       <ReactSVG 
         src={SvgIndonesia}
         beforeInjection={(svg) => {
           svg.setAttribute('width', '100%');
+    svg.setAttribute('height', 'auto'); // Set height to auto to maintain aspect ratio
+    svg.setAttribute('overflow', 'auto');
+    svg.setAttribute('viewBox', '0 0 1000 500');
           const paths = svg.querySelectorAll('path');
 
           paths.forEach((path) => {
@@ -74,9 +83,11 @@ const IndonesiaMap = () => {
 
             // Set warna daerah sesuai state
             path.style.fill = regionColor;
+            // path.style.maxWidth = '100vw';
 
             // Add marker only for paths with blue color
             if (regionColor === '#00D6BC') {
+
               // Create a temporary hidden SVG element
               const tempSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
               tempSVG.style.position = 'absolute';
@@ -108,38 +119,77 @@ const IndonesiaMap = () => {
               marker.setAttribute('x', centerPoint.x - 9); // Adjust based on half of the marker size
               marker.setAttribute('y', centerPoint.y - 20); // Adjust based on half of the marker size
 
-              const handlePathClick = async () => {
-                const regionData = countdaerah.find(
-                  (region) => toTitleCase(region.nama_provinsi.toLowerCase()) === regionName
-                );
+             // Create a cancel token source outside the function to keep track of the latest request
+            let cancelTokenSource = axios.CancelToken.source();
 
-                setMarkerStyle({
-                  position: 'absolute',
-                  left: centerPoint.x - 50,
-                  top: centerPoint.y + 10,
-                  zIndex: '90000000000999999999999999',
-                });
-
-                if (regionData) {
-                  const { id_provinsi } = regionData;
-                  console.log('oii', id_provinsi);
-                  try {
-                    const token = sessionStorage.getItem("jwttoken");
-                    setLoading(true);
-                    const response = await axios.get(`${urlApi}countperdaerah?id_provinsi=${id_provinsi}`, { headers: {"Authorization" : `Bearer ${token}`} });
-                    const regionDetail = response.data;
-                    console.log('datanya nih', regionDetail);
-
-                    // Set data region detail ke state
-                    setSelectedRegionData(regionDetail);
-                  } catch (error) {
-                    console.error('Error fetching region detail:', error);
-                  } finally {
-                    setLoading(false);
+            const handlePathClick = async () => {
+              // Increment the rendering counter
+              setRenderCounter((prevCounter) => prevCounter + 1);
+            
+              const currentRenderCounter = renderCounter; // Store the current counter
+            
+              const regionData = countdaerah.find(
+                (region) => toTitleCase(region.nama_provinsi.toLowerCase()) === regionName
+              );
+            
+              setMarkerStyle({
+                position: 'absolute',
+                left: (centerPoint.x * 1000) / 750 - 50,
+                top: (centerPoint.y * 500) / 500 + 35,
+              });
+            
+              if (regionData) {
+                const { id_provinsi } = regionData;
+                
+                // Declare a separate variable to hold id_provinsi
+                let sentIdProvinsi = id_provinsi;
+            
+                console.log('oii', sentIdProvinsi);
+            
+                try {
+                  const token = sessionStorage.getItem('jwttoken');
+                  setLoading(true);
+            
+                  // Cancel the previous request before making a new one
+                  cancelTokenSource.cancel('New request initiated');
+            
+                  // Create a new cancel token source for the current request
+                  cancelTokenSource = axios.CancelToken.source();
+            
+                  // Process only if the current counter matches the counter when this rendering process started
+                  if (sentIdProvinsi !== lastSentIdProvinsi) {
+                    // Log the current counters and id_provinsi
+                    console.log('currentRenderCounter', currentRenderCounter, 'renderCounter', renderCounter);
+                    console.log('lastSentIdProvinsi', sentIdProvinsi);
+            
+                    const response = await axios.get(`${urlApi}countperdaerah?id_provinsi=${sentIdProvinsi}`, {
+                      headers: { Authorization: `Bearer ${token}` },
+                      cancelToken: cancelTokenSource.token, // Pass the cancel token to the request
+                    });
+            
+                    // Set data region details to state (you might want to adjust this based on your use case)
+                    setSelectedRegionData(response.data);
+                    console.log(response.data);
                   }
+                } catch (error) {
+                  // Check if the error is due to the request being canceled
+                  if (axios.isCancel(error)) {
+                    console.log('Request canceled:', error.message);
+                  } else {
+                    console.error('Error fetching region detail:', error);
+                  }
+                } finally {
+                  setLoading(false);
                 }
-              };
-
+              }
+            };
+            
+            
+            
+            
+            
+            
+            
               const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
               textElement.setAttribute('x', centerPoint.x);
               textElement.setAttribute('y', centerPoint.y - 25); // Adjust based on the desired distance above the marker
@@ -193,7 +243,7 @@ textElement.style.strokeWidth = '1';
                   <p className='itc'>Perempuan</p>
                 </div>
               </div>
-              <button className='button-close-maps' onClick={handleCloseRegionInfo}><Icon icon="carbon:close-filled" /></button>
+              <button className='button-close-maps' onClick={handleCloseRegionInfo}><h5><Icon icon="carbon:close-filled" /></h5></button>
             </div>
           )
         )}

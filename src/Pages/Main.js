@@ -74,9 +74,8 @@ function Main () {
     return (
       <div className="parent">
         <div className='sub-parent'>
-        <Row>
-           <Col xs={8} md={4} className='content-left mx-auto mx-md-0'>
-                <div className='my-3 totalBorder p-md-3 p-2' id='total-umkm'>
+        <div className='grid-list-main'>
+                <div className='mainTu my-3 totalBorder p-md-3 p-2' id='total-umkm'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
                     <div className='d-flex justify-content-center align-items-center w-100 h-100'>
@@ -85,8 +84,8 @@ function Main () {
                                 <h2 className='fw-bold cb'>{dataUser.total_user}</h2>
                                 <h4 className='cyan1 fw-400'>Total UMKM</h4>
                             </div>
-                            <hr className='hr d-md-block d-none' />
-                            <vr className='vr d-md-none d-block' />
+                            <hr className='hr' />
+                            {/* <vr className='vr d-md-none d-block' /> */}
                             <div className='bottom-content d-flex gap-2 align-items-center justify-content-center px-md-0 px-3'>
                                 <div className='content-man w-100 d-block d-xl-flex gap-2 align-items-center'>
                                     <div className='content-man-icon d-flex gap-2 align-items-center justify-content-center'>
@@ -116,65 +115,11 @@ function Main () {
                     </div>
                 </div>
 
-                <div className='my-3 totalBorder p-md-3 p-2 d-md-block d-none' id='skala-usaha'>
-                    <div className='top-border'></div>
-                    <div className='bottom-border'></div>
-                    <div className='content-skala-usaha'>
-                        <div className='content-su-top'>
-                            <div className='content-for-absolute'>
-                                <h4 className='mb-3'>Skala Usaha</h4>
-                                <img className='Topleft' src={Topleft} alt="Topleft" />
-                                <img className='Topright' src={Topright} alt="Topright" />
-                                <img className='Bottomleft' src={Bottomleft} alt="Bottomleft" />
-                                <img className='Bottomright' src={Bottomright} alt="Bottomright" />
-                                <div className='img-chart position-relative'>
-                                    <img className='MainChart position relative mt-2' src={MainChart} alt="MainChart" />
-                                    <p className='img-chart-text ict ict-1 fw-bold'>{data.ultra_mikro}</p>
-                                    <p className='img-chart-text ict ict-2 fw-bold'>{data.mikro}</p>
-                                    <p className='img-chart-text ict ict-3 fw-bold'>{data.menengah}</p>
-                                    <p className='img-chart-text ict ict-4 fw-bold'>{data.besar}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr className='hr-skala-usaha' />
-                        <div className='content-su-bottom d-xl-flex d-block justify-content-xl-center justify-content-start'>
-                            <div className='su-list text-xl-center text-start d-xl-block d-flex justify-content-xl-center justify-content-between'>
-                                <p className='fw-bold cb'>{data.ultra_mikro}</p>
-                                <p>Ultra Micro</p>
-                            </div>
-                            <vr className="vr-skala-usaha d-xl-block d-none" />
-                            <hr className='d-xl-none d-block' />
-                            <div className='su-list text-xl-center text-start d-xl-block d-flex justify-content-xl-center justify-content-between'>
-                                <p className='fw-bold cc'>{data.mikro}</p>
-                                <p>Micro</p>
-                            </div>
-                            <vr className="vr-skala-usaha d-xl-block d-none" />
-                            <hr className='d-xl-none d-block' />
-                            <div className='su-list text-xl-center text-start d-xl-block d-flex justify-content-xl-center justify-content-between'>
-                                <p className='fw-bold cr'>{data.menengah}</p>
-                                <p>Menengah</p>
-                            </div>
-                            <vr className="vr-skala-usaha d-xl-block d-none" />
-                            <hr className='d-xl-none d-block' />
-                            <div className='su-list text-xl-center text-start d-xl-block d-flex justify-content-xl-center justify-content-between'>
-                                <p className='fw-bold cj'>{data.besar}</p>
-                                <p>Besar</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-           </Col>
-
-            <Col xs={12} md={8} className='content-right position-relative'>
-                
-
-                <div className="my-3 svg-maps position-relative">
+                <div className="mainMaps my-3 svg-maps position-relative">
                     <SvgMaps regionColor={selectedRegion} />
                 </div>
 
-                <div className='flex-at d-flex gap-2'>
-
-                <div className='my-3 totalBorder p-md-3 p-2 d-md-none d-block' id='skala-usaha'>
+                <div className='mainSu my-3 totalBorder p-md-3 p-2' id='skala-usaha'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
                     <div className='content-skala-usaha'>
@@ -222,7 +167,7 @@ function Main () {
                     </div>
                 </div>
 
-                <div className='my-3 totalBorder p-md-3 p-2' id='adopsi-teknologi'>
+                <div className='mainAt my-3 totalBorder p-md-3 p-2' id='adopsi-teknologi'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
                     <div className='content-adopsi-teknologi'>
@@ -260,7 +205,7 @@ function Main () {
                     </div>
                 </div>
 
-                <div className='my-3 totalBorder p-md-3 p-2' id='level-umkm'>
+                <div className='mainLu my-3 totalBorder p-md-3 p-2' id='level-umkm'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
                     <div className='content-level-umkm'>
@@ -318,10 +263,7 @@ function Main () {
                         </div>
                     </div>
                 </div>
-
-                </div>
-            </Col>
-        </Row>
+        </div>
         </div>
       </div>
     )

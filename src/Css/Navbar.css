@@ -63,6 +63,20 @@
         margin-top: 2rem;
     }
 }
+@media only screen and (max-width: 768px) {
+    .na-logo img{
+        width: 60%;
+    }
+    .Navbg{
+        transform: translate(-0%, -7.25%);
+    }
+    .na-menu {
+        margin-top: 1.5rem;
+    }
+    .na-logo img{
+        transform: translate(-5%, 12.5%);
+    }
+}
 
 
 
