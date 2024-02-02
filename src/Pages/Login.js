@@ -92,10 +92,10 @@ const Main = () => {
   }, [showNotification]);
 
   return (
-    <div className="parent">
-      <div className='sub-parent'>
-        <Row className='justify-content-center'>
-          <Col sm={8}>
+    <div className="parent-login">
+      <div className='sub-parent-login'>
+        <Row className='justify-content-center h-100'>
+          <Col sm={8} xxl={10} className="my-auto">
             <div className='title text-center'>
               <img className='Umkm' src={Umkm} alt="Umkm" />
               <h5 className='cb my-5 fw4'>USER LOGIN</h5>
