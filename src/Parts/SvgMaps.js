@@ -72,9 +72,9 @@ const IndonesiaMap = () => {
         src={SvgIndonesia}
         beforeInjection={(svg) => {
           svg.setAttribute('width', '100%');
-    svg.setAttribute('height', 'auto'); // Set height to auto to maintain aspect ratio
-    svg.setAttribute('overflow', 'auto');
-    svg.setAttribute('viewBox', '0 0 1000 500');
+          svg.setAttribute('height', 'auto'); // Set height to auto to maintain aspect ratio
+          svg.setAttribute('overflow', 'auto');
+          svg.setAttribute('viewBox', '0 0 1000 500');
           const paths = svg.querySelectorAll('path');
 
           paths.forEach((path) => {
@@ -131,11 +131,14 @@ const IndonesiaMap = () => {
               const regionData = countdaerah.find(
                 (region) => toTitleCase(region.nama_provinsi.toLowerCase()) === regionName
               );
-            
+              
+              const viewboxWidth = 1000;
+              const viewboxHeight = 500;  
+
               setMarkerStyle({
                 position: 'absolute',
-                left: (centerPoint.x * 1000) / 750 - 50,
-                top: (centerPoint.y * 500) / 500 + 35,
+                left: (centerPoint.x * viewboxWidth) / 2500,
+                top: (centerPoint.y * viewboxHeight) / 750,
               });
             
               if (regionData) {
@@ -184,18 +187,12 @@ const IndonesiaMap = () => {
               }
             };
             
-            
-            
-            
-            
-            
-            
               const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
               textElement.setAttribute('x', centerPoint.x);
               textElement.setAttribute('y', centerPoint.y - 25); // Adjust based on the desired distance above the marker
               textElement.setAttribute('text-anchor', 'middle');
               textElement.style.stroke = '#0166FE';
-textElement.style.strokeWidth = '1';
+              textElement.style.strokeWidth = '1';
 
               const regionData = countdaerah.find(
                 (region) => toTitleCase(region.nama_provinsi.toLowerCase()) === regionName
