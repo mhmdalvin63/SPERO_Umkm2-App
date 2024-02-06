@@ -30,12 +30,12 @@
     border: none !important;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-
+/* 
 .dropdown-menu-sosmed{
     width: 90vw !important;
     height: 50vh;
     overflow: auto;
-}
+} */
 .haiii{
     /* display: flex; */
     align-items: center;
@@ -60,16 +60,16 @@
 }
 
 
-.vertical-line {
+/* .vertical-line {
     position: sticky;
-    top: -5%;
+    top: -5%; 
     left: 50%;
-    width: 2px; /* Adjust the width as needed */
-    background-color: #000; /* Adjust the color as needed */
+    width: 2px; 
+    background-color: #000; 
     transform: translateX(-50%);
-    height: 120%; /* Set height to 100% relative to the parent */
-    overflow: hidden; /* Hide any content overflowing the element */
-  }
+    height: 100%;
+    overflow: hidden;
+  } */
 
   
   

@@ -25,8 +25,6 @@ import Bottomright from '../Images/bottom-right.png'
 import LineSektor from '../Images/line-sektor-usaha.png'
 import ContohMaps from '../Images/contoh-maps.png'
 
-
-
 const Umkm = () => {
     let urlApi = process.env.REACT_APP_API_URL;
     console.log(urlApi)
@@ -418,6 +416,6 @@ const Umkm = () => {
     </div>
     </div>
     )
-  }
-  
-  export default Umkm
+}
+
+export default Umkm

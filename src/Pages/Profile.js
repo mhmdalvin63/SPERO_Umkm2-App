@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Profile1 from '../Images/Profile.png';
 import '../Css/Profile.css'
 
-
 const Profile = () => {
     const handleLogout = () => {
         // Perform logout logic here
@@ -50,6 +49,6 @@ const Profile = () => {
         </Container>
         </div>
     )
-  }
+}
   
-  export default Profile
+export default Profile

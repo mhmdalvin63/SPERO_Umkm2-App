@@ -31,11 +31,11 @@ const IndonesiaMap = ({ selectedValue }) => {
   const findDuplicatedPaths = () => {
     const cleanedPathsHTML = [];
     const paths = document.querySelectorAll('path');
+    // Inisialisasi koordinat bounding box dengan nilai yang lebih realistis
     let minX = Infinity,
         minY = Infinity,
         maxX = -Infinity,
         maxY = -Infinity;
-
     for (const path of paths) {
       const regionName = path.getAttribute('name');
       const pathColor = path.style.fill;
