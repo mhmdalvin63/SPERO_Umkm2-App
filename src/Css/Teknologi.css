@@ -63,12 +63,38 @@
     padding: .5rem;
     border-radius: 5px !important;
 }
-.dropdown-menu-sosmed{
-    width: 100%;
-}
+/* .dropdown-menu-sosmed{
+    position: absolute !important;
+    margin-left: 0 !important;
+    width: 90vw;
+    height: 50vh;
+    left: 0 !important;
+    overflow-x: hidden;
+} */
+.dropdown-menu-sosmed {
+    position: absolute !important;
+    margin-left: auto !important;
+    margin-right: auto !important; /* Tambahkan ini untuk membuat dropdown berada di tengah */
+    /* left: 0 !important; */
+    /* right: 0 !important; */
+    width: 90vw !important;
+    height: 50vh !important;
+    /* Sesuaikan transform jika perlu */
+    top: 50% !important;
+    /* transform: translateY(-50%) !important; */
+    overflow-x: hidden !important;
+  }
+
+.centered-dropdown-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
 
 .list-daerah-dropdown{
-    margin-top: -75% !important;
+    /* margin-top: -20rem !important; */
 }
 
 
