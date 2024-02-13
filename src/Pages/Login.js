@@ -32,7 +32,7 @@ const Main = () => {
         "password": password
       };
 
-      fetch(`${urlApi}dashboard/login`, {
+      fetch(`${urlApi}login`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(inputobj)
@@ -50,8 +50,8 @@ const Main = () => {
           if (Object.keys(resp).length === 0) {
             setShowNotification(true);
           } else {
-            sessionStorage.setItem('jwttoken', resp.data.access_token.token);
-            console.log('resp.data.access_token.token', resp.data.access_token.token);
+            sessionStorage.setItem('jwttoken', resp.access_token);
+            console.log('resp.access_token', resp.access_token);
             usenavigate('/main');
           }
         })
