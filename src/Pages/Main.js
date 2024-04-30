@@ -46,12 +46,14 @@ function Main () {
     
             // console.log('SKALA USAHA', skalaUsahaResponse.data);
             setData(skalaUsahaResponse.data);
-    
+            
             // console.log('COUNT UMKM', countUmkmResponse.data);
             setDataUser(countUmkmResponse.data);
-    
+            
+            
             // console.log('LEVEL UMKM', levelUmkmResponse.data);
             setDataLevel(levelUmkmResponse.data);
+            console.log('DATA LEVEL', levelUmkmResponse.data);
     
             // console.log('Adopsi Teknologi UMKM', adopsiTeknologiResponse.data);
             setDataAdopsiTeknologi(adopsiTeknologiResponse.data);
@@ -217,7 +219,7 @@ function Main () {
                         <div className='lu-content'>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">{dataLevel.leader}</p>
+                                    <p className="fw-bold cc">{dataLevel.levelcount.Leader}</p>
                                     <p className="cb">LEADER</p>
                                 </div>
                                 <div className='llu-right'>
@@ -226,7 +228,7 @@ function Main () {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">{dataLevel.novice}</p>
+                                    <p className="fw-bold cc">{dataLevel.levelcount.Novice}</p>
                                     <p className="cb">NOVICE</p>
                                 </div>
                                 <div className='llu-right'>
@@ -235,7 +237,7 @@ function Main () {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">{dataLevel.beginner}</p>
+                                    <p className="fw-bold cc">{dataLevel.levelcount.Beginner}</p>
                                     <p className="cb">BEGINNER</p>
                                 </div>
                                 <div className='llu-right'>
@@ -244,8 +246,8 @@ function Main () {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">63</p>
-                                    <p className="cb">{dataLevel.observer}</p>
+                                    <p className="fw-bold cc">{dataLevel.levelcount.Observer}</p>
+                                    <p className="cb">OBSERVER</p>
                                 </div>
                                 <div className='llu-right'>
                                 <img className='Statistic' src={Statistic} alt="Statistic" />
@@ -253,7 +255,7 @@ function Main () {
                             </div>
                             <div className='list-lu my-2'>
                                 <div className='llu-left'>
-                                    <p className="fw-bold cc">{dataLevel.adopter}</p>
+                                    <p className="fw-bold cc">{dataLevel.levelcount.Adopter}</p>
                                     <p className="cb">ADOPTER</p>
                                 </div>
                                 <div className='llu-right'>
