@@ -37,12 +37,8 @@
 
 .active{
     color: blue !important;
-    font-weight: bold;
+    font-weight: 550;
 }
-.active p {
-    text-decoration: underline;
-}
-
 @media only screen and (max-width: 1850px) {
     .nav-absolute{
         transform: translateY(-50%);

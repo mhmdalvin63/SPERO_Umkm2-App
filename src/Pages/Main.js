@@ -77,13 +77,14 @@ function Main () {
       <div className="parent">
         <div className='sub-parent'>
         <div className='grid-list-main'>
+
                 <div className='mainTu my-3 totalBorder p-md-3 p-2' id='total-umkm'>
                     <div className='top-border'></div>
                     <div className='bottom-border'></div>
                     <div className='d-flex justify-content-center align-items-center w-100 h-100'>
                         <div className='w-100 d-md-block d-flex justify-content-center'>
                             <div className='content d-block text-center d-xl-flex justify-content-center align-items-center gap-2 px-3'>
-                                <h2 className='fw-bold cb'>{dataUser.total_user}</h2>
+                                <h2 className='fw-bold cb'>{dataUser.total_user.toLocaleString()}</h2>
                                 <h4 className='cyan1 fw-400'>Total UMKM</h4>
                             </div>
                             <hr className='hr' />
@@ -104,11 +105,11 @@ function Main () {
                                 <div className='content-man w-100 d-block d-xl-flex gap-2 align-items-center'>
                                     <div className='content-man-icon d-flex gap-2 align-items-center justify-content-center'>
                                         <h1 className='cc'><Icon icon="ant-design:woman-outlined" /></h1>
-                                        <h4 className='mb-0 cb d-block d-xl-none'>{dataUser.total_perempuan}</h4>
+                                        <h4 className='mb-0 cc d-block d-xl-none'>{dataUser.total_perempuan}</h4>
                                     </div>
                                         <p className='mb-0 d-block d-xl-none text-center'>Perempuan</p>
                                     <div className='content-man-value d-none d-xl-block'>
-                                        <h4 className='mb-0 cb'>{dataUser.total_perempuan}</h4>
+                                        <h4 className='mb-0 cc'>{dataUser.total_perempuan}</h4>
                                         <p className='mb-0'>Perempuan</p>
                                     </div>
                                 </div>
@@ -265,6 +266,7 @@ function Main () {
                         </div>
                     </div>
                 </div>
+                
         </div>
         </div>
       </div>

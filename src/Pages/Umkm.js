@@ -89,28 +89,31 @@ const Umkm = () => {
     <div className='sub-parent'>
       <Row>
         <Col sm={8} md={9} xxl={10} className='d-flex align-items-center'>
-        {selectedNamaProvinsi && selectedNamaProvinsi.length > 0 ? (
-        <h4>{selectedNamaProvinsi}</h4>
-        ) : (
-        <h4>Sebaran Wilayah UMKM</h4>
-        )}
+            {selectedNamaProvinsi && selectedNamaProvinsi.length > 0 ? (
+            <h4>{selectedNamaProvinsi}</h4>
+            ) : (
+            <h4>Sebaran Wilayah UMKM</h4>
+            )}
         </Col>
+
         <Col sm={4} md={3} xxl={2}>
-            <div className='form-select-wilayah'>
-                <p className='fwb'>Wilayah UMKM :</p>
-                <Form.Select
-                    aria-label="Default select example"
-                    value={selectedValue}
-                    onChange={handleSelectChange}
-                >
-                    <option value='1'></option>
-                    {DataDaerah.map((option) => (
-                    <option key={option.id_provinsi} value={option.id_provinsi}>
-                        {option.nama_provinsi}
-                    </option>
-                    ))}
-                </Form.Select>
-            </div>
+        <div className='form-select-wilayah'>
+    <p className='fwb'>Wilayah UMKM :</p>
+    <Form.Select
+        aria-label="Default select example"
+        value={selectedValue}
+        onChange={handleSelectChange}
+    >
+        <option value='' disabled hidden>Sebaran Wilayah</option>
+        <option value=''>Sebaran Wilayah</option>
+        {DataDaerah.map((option) => (
+            <option key={option.id_provinsi} value={option.id_provinsi}>
+                {option.nama_provinsi}
+            </option>
+        ))}
+    </Form.Select>
+</div>
+
         </Col>
       </Row>
       {console.log('Selected Value:', selectedValue)}
@@ -120,12 +123,12 @@ const Umkm = () => {
                 <SvgMaps />
             </>
         ) : (
-      <div>
-            <Row className='align-items-center'>
-                    <Col sm={12}>
-                    <Maps selectedValue={selectedNamaProvinsi}/>
-                    </Col>
-            </Row>
+            <div>
+                <Row className='align-items-center'>
+                        <Col sm={12}>
+                        <Maps selectedValue={selectedNamaProvinsi}/>
+                        </Col>
+                </Row>
 
                 <div className='grid-list-umkm'>
                     <div className='totalUmkm my-3 totalBorder p-3' id='total-umkm'>
@@ -154,11 +157,11 @@ const Umkm = () => {
                                     <div className='content-man w-100 d-block d-xl-flex gap-2 align-items-center'>
                                         <div className='content-man-icon d-flex gap-2 align-items-center justify-content-center'>
                                             <h1 className='cc'><Icon icon="ant-design:woman-outlined" /></h1>
-                                            <h4 className='mb-0 cb d-block d-xl-none'>{DataSelect.userCountPerempuan}</h4>
+                                            <h4 className='mb-0 cc d-block d-xl-none'>{DataSelect.userCountPerempuan}</h4>
                                         </div>
                                             <p className='mb-0 d-block d-xl-none text-center'>Perempuan</p>
                                         <div className='content-man-value d-none d-xl-block'>
-                                            <h4 className='mb-0 cb'>{DataSelect.userCountPerempuan}</h4>
+                                            <h4 className='mb-0 cc'>{DataSelect.userCountPerempuan}</h4>
                                             <p className='mb-0'>Perempuan</p>
                                         </div>
                                     </div>
@@ -412,7 +415,7 @@ const Umkm = () => {
                     </div>
                 </div>
             </div>  
-    )}
+        )}
     </div>
     </div>
     )

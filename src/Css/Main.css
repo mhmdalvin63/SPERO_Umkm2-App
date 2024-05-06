@@ -113,6 +113,9 @@
   align-items: center;
   line-height: 1;
 }
+.content-man h4{
+  font-weight: bold;
+}
 .content-woman{
   align-items: center;
   line-height: 1;
