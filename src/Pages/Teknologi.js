@@ -466,8 +466,7 @@ const capitalizeFirstLetter = (string) => {
                         </div>
                       ))}
                     </Dropdown.Menu> */}
-                  <div className="centered-dropdown-menu">
-                    <Dropdown.Menu className='dropdown-menu-sosmed'>
+                    <Dropdown.Menu className='dropdown-menu-sosmed position-absolute'>
                       {/* <h4 className='text-center'>{evenItem.title}</h4> */}
                       {/* <div className="vertical-line"></div> */}
                       {/* <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
@@ -580,7 +579,6 @@ const capitalizeFirstLetter = (string) => {
                         
                       })()}
                     </Dropdown.Menu>
-                  </div>
 
 {/* /* ------------------------------ DROPDOWN MENU ----------------------------- */}
 
@@ -591,7 +589,7 @@ const capitalizeFirstLetter = (string) => {
           </div>
           <div className='chart-sosial-media p-3'>
               <div className='content-csm mx-3'>
-                <div> <h5>Sosial Media</h5> </div>
+                <div> <h5>MarketPlace</h5> </div>
                 <Form.Select
                   className='w-25'
                   aria-label="Provinsi Select"
