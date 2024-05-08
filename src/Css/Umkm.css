@@ -63,6 +63,49 @@
 }
 
 
+/* ICON SELECT */
+.custom-select {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #ccc !important;
+    border-radius: 7.5px;
+}
+
+.custom-select select {
+    display: inline-block;
+    padding: 8px 30px 8px 10px; /* Sesuaikan dengan kebutuhan Anda */
+    border: 1px solid #ccc !important;
+    border-radius: 7.5px !important;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.custom-select .arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease; /* Efek transisi untuk perubahan rotasi */
+}
+
+.custom-select select:focus + .arrow {
+    transform: translateY(-50%) rotate(210deg);
+}
+
+.custom-select select:not(:focus) + .arrow {
+    transition: transform 0.3s ease;
+    transform: translateY(-50%) rotate(0deg);
+}
+
+#arrowPath {
+    fill: #555; /* Sesuaikan dengan warna yang Anda inginkan */
+}
+
+
+
 /* -------------------------------------------------------------------------- */
 /*                                 RESPONSIVE                                 */
 /* -------------------------------------------------------------------------- */

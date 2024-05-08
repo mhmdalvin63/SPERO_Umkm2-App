@@ -84,6 +84,7 @@ const Umkm = () => {
     }
 
     console.log('selectedNamaProvinsi',selectedNamaProvinsi)
+
     return (
         <div className='parent'>
     <div className='sub-parent'>
@@ -97,22 +98,27 @@ const Umkm = () => {
         </Col>
 
         <Col sm={4} md={3} xxl={2}>
-        <div className='form-select-wilayah'>
-    <p className='fwb'>Wilayah UMKM :</p>
-    <Form.Select
-        aria-label="Default select example"
-        value={selectedValue}
-        onChange={handleSelectChange}
-    >
-        <option value='' disabled hidden>Sebaran Wilayah</option>
-        <option value=''>Sebaran Wilayah</option>
-        {DataDaerah.map((option) => (
-            <option key={option.id_provinsi} value={option.id_provinsi}>
-                {option.nama_provinsi}
-            </option>
-        ))}
-    </Form.Select>
-</div>
+        <div class='form-select-wilayah'>
+            <p class='fwb'>Wilayah UMKM :</p>
+            <div class="custom-select">
+                <select id="selectWilayah"
+                    aria-label="Default select example"
+                    value={selectedValue}
+                    onChange={handleSelectChange}
+                >
+                    <option value='' disabled hidden>Sebaran Wilayah</option>
+                    <option value=''>Sebaran Wilayah</option>
+                    {DataDaerah.map((option) => (
+                        <option key={option.id_provinsi} value={option.id_provinsi}>
+                            {option.nama_provinsi}
+                        </option>
+                    ))}
+                </select>
+                <span class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18a1 1 0 0 0 0-1.69L9.54 5.98A.998.998 0 0 0 8 6.82"/></svg>
+                </span>
+            </div>
+        </div>
 
         </Col>
       </Row>
