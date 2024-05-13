@@ -1,78 +1,30 @@
-.parent-login{
-    overflow: hidden;
-    height: 90vh;
-}
-.sub-parent-login{
-    height: 100%;
-}
-
-.form-login{
-    border-radius: 20px !important;
-    border: 1px solid gray;
-    background: none !important;
-    background-color: none !important;
-    background-color: none !important;
-}
-.form-login:focus{
-    background-color: none !important;
-    background: none !important;
-}
-.form-login .form-control{
-    padding: .5rem 2rem;
-    border-radius: 20px !important;
-}
-
-.button-submit-login .button-submit{
-    background: rgb(25, 25, 110);
-    background: linear-gradient(90deg, rgba(1,0,204,1) 41%, rgba(24,209,255,1) 100%);
-    padding: .75rem 5rem !important;
-    border-radius: 50px !important;
-    border: none !important;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-/* 
-.dropdown-menu-sosmed{
-    width: 90vw !important;
-    height: 50vh;
-    overflow: auto;
-} */
-.haiii{
-    /* display: flex; */
-    align-items: center;
-}
-
-.BottomLogin{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    z-index: -1;
-}
-
-/* --------------------------- flex-dropdown-menu --------------------------- */
-#flex-dropdown-menu{
-    display: flex;
-}
-.list-dropdown-menu{
-    width: 45%;
-}
-
-
-/* .vertical-line {
-    position: sticky;
-    top: -5%; 
-    left: 50%;
-    width: 2px; 
-    background-color: #000; 
-    transform: translateX(-50%);
-    height: 100%;
-    overflow: hidden;
-  } */
-
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display:grid;
+    -webkit-mask: conic-gradient(from 15deg,#0000,#000);
+    animation: l26 1s infinite steps(12);
+  }
+  .loader,
+  .loader:before,
+  .loader:after{
+    background:
+      radial-gradient(closest-side at 50% 12.5%,
+       #0166FE 96%,#0000) 50% 0/20% 80% repeat-y,
+      radial-gradient(closest-side at 12.5% 50%,
+       #0166FE 96%,#0000) 0 50%/80% 20% repeat-x;
+  }
+  .loader:before,
+  .loader:after {
+    content: "";
+    grid-area: 1/1;
+    transform: rotate(30deg);
+  }
+  .loader:after {
+    transform: rotate(60deg);
+  }
   
-  
-  .w-85{
-    width: 85% !important;
+  @keyframes l26 {
+    100% {transform:rotate(1turn)}
   }

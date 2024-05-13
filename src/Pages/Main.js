@@ -70,7 +70,7 @@ function Main () {
     }, []);
 
     if (loading) {
-        return <div style={{ height: '100%', width: '100%' }}><Loading/></div>;
+        return <div className='d-flex align-items-center justify-content-center's style={{ height: '100vh', width: '100%' }}><Loading/></div>;
     }
 
     return (

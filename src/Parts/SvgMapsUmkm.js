@@ -107,9 +107,7 @@ const IndonesiaMap = ({ selectedValue }) => {
 
   if (loading) {
     return (
-      <div style={{ height: '100vh', width: '100%' }}>
-        <Loading />
-      </div>
+      <div className='d-flex align-items-center justify-content-center's style={{ height: '100vh', width: '100%' }}><Loading/></div>
     );
   }
 
