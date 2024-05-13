@@ -187,7 +187,7 @@ const series = titleSosialMedia.map((item, index) => ({
 }));
 console.log('series', series)
 
-let seriesColors = ['#638889','#E6A4B4','#80BCBD','#FFB996','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
+let seriesColors = ['#CC00FF','#000000','#1877F2','#00FFA3','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
 // console.log('seriesColors', seriesColors)
 // console.log(generateSeriesColors)
 // console.log('selectedProvinsi',selectedProvinsi)

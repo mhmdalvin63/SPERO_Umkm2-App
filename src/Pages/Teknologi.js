@@ -249,7 +249,9 @@ const capitalizeFirstLetter = (string) => {
     return `${minX - padding} ${minY - padding} ${width + 2 * padding} ${height + 2 * padding}`;
   };
 
-  let seriesColors = ['#638889','#E6A4B4','#80BCBD','#FFB996','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
+  let seriesColors = ['#CC00FF','#000000','#1877F2','#00FFA3','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
+
+  let seriesColors2 = ['#15C610','#FF5220','#1877F2','#000000','#FFCF81','#756AB6','#A1EEBD','#AC87C5','#7BD3EA','#CD8D7A','#B1C381','#9BB8CD','#FF90BC','#B06161','#8ACDD7','#3A4D39','#F9B572','#116A7B','#545B77','#7C96AB','#FF8080','#E9B384','#7C9D96']
   
   
     return (
@@ -608,7 +610,7 @@ const capitalizeFirstLetter = (string) => {
                 <div className='chart-title justify-content-center my-2 gap-3'>
                   {titleMarketplace.map((item, index) => (
                     <div className='content-chart-title gap-1'>
-                      <div className='oval' style={{ backgroundColor : seriesColors[index] }}></div>
+                      <div className='oval' style={{ backgroundColor : seriesColors2[index] }}></div>
                       {/* <p>{index}</p> */}
                       <p>{item.title}</p>
                     </div>
